@@ -18,9 +18,9 @@ public class ConnectionPoolimpl implements ConnectionPool {
 	private ConnectionPoolimpl() {
 		// xac dinh trinh dieu khien
 		this.driver ="com.mysql.cj.jdbc.Driver";
-		this.username="tranhanh_hanh";
-		this.password="@12#$%65";
-		this.url="jdbc:mysql://localhost:3306/tranhanh_data";
+		this.username="root";
+		this.password="123456";
+		this.url="jdbc:mysql://localhost:3306/shop_online";
 		
 		// nap trinh dieu khien
 		
@@ -56,7 +56,8 @@ public class ConnectionPoolimpl implements ConnectionPool {
 	@Override
 	public void relaseConnection(Connection con, String objectName) {
 		// TODO Auto-generated method stub
-		
+		System.out.println(objectName + "have pushed the Connection");
+		this.pool.push(con);
 	}
 	public static ConnectionPool getInstance() {
 		

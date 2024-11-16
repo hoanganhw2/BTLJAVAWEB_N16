@@ -133,7 +133,7 @@
       <div class="row item-grid ">
         <div class="col-lg-3 col-md-6">
           <div class="card p-3 mb-4 text-center">
-            <a href="#" class="img-wrap text-center">
+            <a href="${pageContext.request.contextPath}/productDetail" class="img-wrap text-center">
               <img class="img-fluid product-img" src="img/iphone.jpg">
             </a>
             <figcaption class="info-wrap mt-2 ">

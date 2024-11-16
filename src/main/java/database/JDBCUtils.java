@@ -6,9 +6,11 @@ import java.sql.SQLException;
 
 public class JDBCUtils {
 	private Connection connection ;
-	private String url="jdbc:mysql://localhost:3306/demoweb";
+//	private String url="jdbc:mysql://localhost:3306/demoweb";
+	private String url="jdbc:mysql://localhost:3306/shop_online";
 	private String user="root";
-	private String pasword="root";
+//	private String pasword="root";
+	private String pasword="123456";
 	private String Driver="com.mysql.cj.jdbc.Driver";
 	public Connection getConnection() {
 		
@@ -29,5 +31,7 @@ public class JDBCUtils {
 	}
 	public static void main(String[] args) {
 		new JDBCUtils().getConnection();
+		System.out.println(new JDBCUtils().getConnection());
+		System.out.println(123);
 	}
 }
