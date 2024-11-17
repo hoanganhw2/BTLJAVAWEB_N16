@@ -11,5 +11,5 @@ public interface Product {
 	ArrayList<ResultSet> getProducts(String multiSelect, int at, byte total);
 	ArrayList<ResultSet> getProducts(String multiSelect);
 	ResultSet getProduct(int id);
-	ResultSet getProduct(String name, String pass);
+	ResultSet getProduct(String name, int id);
 }

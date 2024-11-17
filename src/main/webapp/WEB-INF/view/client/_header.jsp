@@ -9,9 +9,9 @@
         <div class="row align-items-center">
           <div class="col-lg-3 py-3">
             <a class="text-body" href="${pageContext.request.contextPath}">
-              <h3>Phone Shop</h3>
+              <h3>Countduck</h3>
             </a>
-          </div> <!-- col.// -->
+          </div> 
           <div class="col-lg-4 col-xl-5">
             <form action="#" class="search">
               <div class="input-group w-100">
@@ -21,7 +21,7 @@
                 </button>
               </div>
             </form>
-          </div> <!-- col.// -->
+          </div> 
           <div class="col-lg-5 col-xl-4">
             <ul class="nav col-12 col-lg-auto my-2 my-lg-0 justify-content-center justify-content-lg-end text-small">
               <li>
@@ -40,12 +40,12 @@
                 <a href="#" class="nav-link text-body">
                   <i class="bi bi-cart d-block text-center fs-3"></i>
                   Giỏ hàng
-                  <span class="cart-count" id="cartCount">3</span>
+                   <span class="cart-count" id="cartCount">3</span>
                 </a>
               </li>
             </ul>
-          </div> <!-- col.// -->
-        </div> <!-- row.// -->
-      </div> <!-- container.// -->
-    </section> <!-- header-main.// -->
-  </header> <!-- section-header.// -->
+          </div> 
+        </div> 
+      </div>
+    </section>
+  </header> 

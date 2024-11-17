@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final String URLPAGE ="/WEB-INF/view/";
+	private final String URLPAGE ="/WEB-INF/view/client";
     
     public LoginController() {
         super();
@@ -23,7 +23,7 @@ public class LoginController extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(URLPAGE+"login.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(URLPAGE+"/login.jsp");
 		requestDispatcher.forward(request, response);
 	}
 

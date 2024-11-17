@@ -33,13 +33,13 @@ public class GetProductDetailPage extends HttpServlet {
 //		System.out.println(dispatcher);
 //        dispatcher.forward(request, response);
 		Product p = new ProductImpl();
-		System.out.println(request.getParameter("id"));
-		int productId = Integer.parseInt(request.getParameter("id")); // Giả sử ID sản phẩm được truyền qua URL
+		int productId = 1;
+	 // Giả sử ID sản phẩm được truyền qua URL
         ResultSet product = p.getProduct(productId); // Gọi phương thức để lấy thông tin sản phẩm
         System.out.println(product);
         request.setAttribute("product", product); // Đưa sản phẩm vào request
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/productDetail.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/client/productDetail.jsp");
         dispatcher.forward(request, response);
 	}
 

@@ -31,7 +31,7 @@ public class HomePageController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		request.setAttribute("title","Trang chủ");
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/home.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/client/home.jsp");
 	        dispatcher.forward(request, response);
 	}
 

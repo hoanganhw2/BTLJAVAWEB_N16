@@ -6,27 +6,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Đăng nhập</title>
-   <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon">
+   
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap v5.0.1 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap Icons v1.5.0 -->
-    <link href="css/bootstrap-icons.css" type="text/css" rel="stylesheet">
-
-    <!-- Custom Styles -->
-    <link href="css/style.css" type="text/css" rel="stylesheet">
+   <jsp:include page ="_link.jsp"/>
 </head>
 <body>
 <!-- header,navbar start -->
-		
 		<jsp:include page="_header.jsp"/>
-		<jsp:include page="_navbar.jsp"/>
-<!-- header,navbar end -->
-<
-
+    
     <section class="section-content" style="margin: 100px 0;">
-        <div class="card mx-auto" style="max-width: 380px">
+        <div class="card mx-auto" style="max-width: 350px">
             <div class="card-body">
                 <h4 class="card-title mb-4">Đăng nhập</h4>
                 <form action="${pageContext.request.contextPath}/login" method="post">
@@ -47,8 +38,9 @@
         </div> <!-- card .// -->
         <p class="text-center mt-4">Không có tài khoản? <a href="#">Đăng ký</a></p>
     </section> <!-- section-content.// -->
-	<jsp:include page="_footer.jsp"></jsp:include>
-	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="${pageContext.request.contextPath}/js/main.js"></script>
+	<jsp:include page="_footer.jsp"/>
+
+
+
 </body>
 </html>

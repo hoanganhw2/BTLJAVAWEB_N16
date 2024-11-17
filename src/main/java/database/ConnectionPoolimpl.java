@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Stack;
 
+import JDBCUtils.ConnectionPool;
+
 
 public class ConnectionPoolimpl implements ConnectionPool {
 	String driver ;
@@ -54,8 +56,9 @@ public class ConnectionPoolimpl implements ConnectionPool {
 
 	}
 	@Override
-	public void relaseConnection(Connection con, String objectName) {
+	public void releaseConnection(Connection con, String objectName) throws SQLException {
 		// TODO Auto-generated method stub
+		// Thu hồi lại kết nối
 		System.out.println(objectName + "have pushed the Connection");
 		this.pool.push(con);
 	}
@@ -71,6 +74,11 @@ public class ConnectionPoolimpl implements ConnectionPool {
 		
 		return cp;
 	}
+//	@Override
+//	public void releaseConnection(Connection con, String objectname) throws SQLException {
+//		// TODO Auto-generated method stub
+//		
+//	}
 	
 	
 	
