@@ -21,7 +21,7 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 			StringBuilder sql = new StringBuilder();
 			sql.append(
 					"INSERT INTO user_name,user_pass,user_fullname,user_gender,user_image,user_email,user_phone,user_address,user_role");
-			sql.append("VLUES ").append("(?),md5(?),(?),(?),(?),(?),(?),?");
+			sql.append("VLUES ").append("(?,md5(?),?,?,?,?,?,?)");
 			PreparedStatement pre = con.prepareStatement(sql.toString());
 			pre.setString(1, item.getUser_name());
 			pre.setString(2, item.getUser_pass());
@@ -89,7 +89,7 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 	public ResultSet getUser(int id) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT user_name,user_pass,user_fullname,user_email,user_phone,user_address");
-		sql.append("WHERE user_id = ?");
+		sql.append("WHERE user_id = ? ");
 		return get(sql.toString(), id);
 	}
 
