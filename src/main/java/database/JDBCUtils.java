@@ -31,7 +31,6 @@ public class JDBCUtils {
 	}
 	public static void main(String[] args) {
 		new JDBCUtils().getConnection();
-		System.out.println(new JDBCUtils().getConnection());
 		System.out.println(123);
 	}
 }
