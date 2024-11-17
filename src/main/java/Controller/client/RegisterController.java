@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/register")
 public class RegisterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final String URLPAGE ="/WEB-INF/view/";   
+	private final String URLPAGE ="/WEB-INF/view/client";   
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -30,7 +30,7 @@ public class RegisterController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(URLPAGE+"register.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(URLPAGE+"/register.jsp");
 		requestDispatcher.forward(request, response);
 	}
 

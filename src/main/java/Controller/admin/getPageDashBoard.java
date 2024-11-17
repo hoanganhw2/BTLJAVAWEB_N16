@@ -1,4 +1,4 @@
-package Controller.client;
+package Controller.admin;
 
 import java.io.IOException;
 
@@ -10,34 +10,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class GetProductDetailPage
+ * Servlet implementation class getPageDashBoard
  */
-@WebServlet("/product")
-public class GetProductDetailPage extends HttpServlet {
+@WebServlet("/admin")
+public class getPageDashBoard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public GetProductDetailPage() {
+   
+    public getPageDashBoard() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/client/productDetail.jsp");
-        dispatcher.forward(request, response);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/view/admin/home.jsp");
+		requestDispatcher.forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
 	}
 
 }
