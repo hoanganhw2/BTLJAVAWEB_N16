@@ -8,7 +8,7 @@
 <jsp:include page="_link.jsp"/>
 </head>
 <body>
-
+	<jsp:include page="_header.jsp"></jsp:include>
 	
 	<section class="section-content" style="margin: 100px 0;">
     <div class="card mx-auto" style="max-width: 400px;">
@@ -44,7 +44,7 @@
                 </div>
                 <div class="mb-2">
                     <label class="form-label" for="phone">Số điện thoại<span class="text-danger">*</span></label>
-                    <input class="form-control" id="email" name="userphone">
+                    <input class="form-control" id="phone" name="userphone">
                 </div>
                 <div class="mb-2">
                     <label class="form-label" for="address">Địa chỉ<span class="text-danger">*</span></label>

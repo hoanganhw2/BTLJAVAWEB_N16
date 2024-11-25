@@ -9,18 +9,11 @@
 
     <title>Giỏ hàng</title>
 
-    <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon">
-
-    <!-- Bootstrap v5.0.1 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
-
-    <!-- Bootstrap Icons v1.5.0 -->
-    <link href="css/bootstrap-icons.css" type="text/css" rel="stylesheet">
-
+    <link href="${pageContext.request.contextPath}/img/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="${pageContext.request.contextPath}/css/bootstrap-icons.css" type="text/css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <!-- Custom Styles -->
-    <link href="css/style.css" type="text/css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/client.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>

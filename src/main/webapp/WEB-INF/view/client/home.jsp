@@ -5,13 +5,12 @@
 <html lang="vi">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+	<jsp:include page="_link.jsp"></jsp:include>
   <title>Trang chủ</title>
 
- 
-  <jsp:include page="_link.jsp"/>
+
+    
 </head>
 
 <body>
@@ -119,7 +118,7 @@
   <section class="section-content mb-5">
     <div class="container">
       <header class="section-heading py-4 d-flex justify-content-between">
-        <h3 class="section-title">Sản phẩm mới nhất</h3>
+        <h3 class="section-title">Danh sách sản phẩm</h3>
         <a class="btn btn-secondary" href="#" role="button" style="height: fit-content;">Xem tất cả</a>
       </header> <!-- section-heading.// -->
       <div class="row item-grid ">
@@ -130,7 +129,8 @@
             </a>
             <figcaption class="info-wrap mt-2 ">
               <a href="#" class="title fs-4 fw-bold">Iphone 14</a>
-              <div class="price mt-1 fw-bold fs-5"><span class="text-danger">20.900.000đ</span></div>
+              <p class="price-old fs-5">Giá cũ: <span>32.000.000₫</span></p>
+              <div class="price mt-1 fw-bold fs-5"><span class="text-black">20.900.000đ</span></div>
               <a href="#" class="btn btn-success mt-2 add-to-cart  "><i class="bi bi-cart"></i>Thêm
                 vào giỏ hàng</a>
 
@@ -144,7 +144,8 @@
             </a>
             <figcaption class="info-wrap mt-2 ">
               <a href="#" class="title fs-4 fw-bold">Galaxy tab S9</a>
-              <div class="price mt-1 fw-bold fs-5 "><span class="text-danger">19.450.000₫</span></div>
+               <p class="price-old fs-5">Giá cũ: <span>32.000.000₫</span></p>
+              <div class="price mt-1 fw-bold fs-5 "><span class="text-black">19.450.000₫</span></div>
               <a href="/add-product" class="btn btn-success mt-2 "><i class="bi bi-cart"></i>Thêm vào giỏ hàng</a>
             </figcaption>
           </div>
@@ -156,7 +157,8 @@
             </a>
             <figcaption class="info-wrap mt-2 ">
               <a href="#" class="title fs-4 fw-bold">Iphone 14</a>
-              <div class="price mt-1 fw-bold fs-5 text-danger">19.450.000₫</div>
+               <p class="price-old fs-5">Giá cũ: <span>32.000.000₫</span></p>
+              <div class="price mt-1 fw-bold fs-5 text-black">19.450.000₫</div>
               <a href="/add-product" class="btn btn-success mt-2 "><i class="bi bi-cart"></i>Thêm vào giỏ hàng</a>
             </figcaption>
           </div>
@@ -168,7 +170,8 @@
             </a>
             <figcaption class="info-wrap mt-2 ">
               <a href="#" class="title fs-4 fw-bold">Iphone 14</a>
-              <div class="price mt-1 fw-bold fs-5 text-danger">19.450.000₫</div>
+               <p class="price-old fs-5">Giá cũ: <span>32.000.000₫</span></p>
+              <div class="price mt-1 fw-bold fs-5 text-black">19.450.000₫</div>
               <a href="/add-product" class="btn btn-success mt-2 "><i class="bi bi-cart"></i>Thêm vào giỏ hàng</a>
             </figcaption>
           </div>
@@ -180,7 +183,8 @@
             </a>
             <figcaption class="info-wrap mt-2 ">
               <a href="#" class="title fs-4 fw-bold">Iphone 14</a>
-              <div class="price mt-1 fw-bold fs-5 text-danger">19.450.000₫</div>
+               <p class="price-old fs-5">Giá cũ: <span>32.000.000₫</span></p>
+              <div class="price mt-1 fw-bold fs-5 text-black">19.450.000₫</div>
               <a href="/add-product" class="btn btn-success mt-2 "><i class="bi bi-cart"></i>Thêm vào giỏ hàng</a>
             </figcaption>
           </div>
@@ -192,7 +196,8 @@
             </a>
             <figcaption class="info-wrap mt-2 ">
               <a href="#" class="title fs-4 fw-bold">Iphone 14</a>
-              <div class="price mt-1 fw-bold fs-5 text-danger">19.450.000₫</div>
+               <p class="price-old fs-5">Giá cũ: <span>32.000.000₫</span></p>
+              <div class="price mt-1 fw-bold fs-5 text-black">19.450.000₫</div>
               <a href="/add-product" class="btn btn-success mt-2 "><i class="bi bi-cart"></i>Thêm vào giỏ hàng</a>
             </figcaption>
           </div>
@@ -204,7 +209,8 @@
             </a>
             <figcaption class="info-wrap mt-2 ">
               <a href="#" class="title fs-4 fw-bold">Iphone 14</a>
-              <div class="price mt-1 fw-bold fs-5 text-danger">19.450.000₫</div>
+               <p class="price-old fs-5">Giá cũ: <span>32.000.000₫</span></p>
+              <div class="price mt-1 fw-bold fs-5 text-black">19.450.000₫</div>
               <a href="/add-product" class="btn btn-success mt-2 "><i class="bi bi-cart"></i>Thêm vào giỏ hàng</a>
             </figcaption>
           </div>
@@ -216,7 +222,8 @@
             </a>
             <figcaption class="info-wrap mt-2 ">
               <a href="#" class="title fs-4 fw-bold">Iphone 14</a>
-              <div class="price mt-1 fw-bold fs-5 text-danger">19.450.000₫</div>
+               <p class="price-old fs-5">Giá cũ: <span>32.000.000₫</span></p>
+              <div class="price mt-1 fw-bold fs-5 text-black">19.450.000₫</div>
               <a href="/add-product" class="btn btn-success mt-2 "><i class="bi bi-cart"></i>Thêm vào giỏ hàng</a>
             </figcaption>
           </div>

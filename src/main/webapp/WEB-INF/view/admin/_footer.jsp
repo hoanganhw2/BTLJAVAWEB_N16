@@ -25,8 +25,10 @@
 		
         <!-- Vendor JS Files -->
         <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-       <script src="${pageContext.request.contextPath}/js/bootstrap.min.js" ></script>
-       <script src="${pageContext.request.contextPath}/js/admin/js/bootstrap.bundle.min" ></script>
+     	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    	<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+
+        <script src="${pageContext.request.contextPath}/js/admin.js"></script>
         <script src="assets/vendor/chart.js/chart.umd.js"></script>
         <script src="assets/vendor/echarts/echarts.min.js"></script>
         <script src="assets/vendor/quill/quill.js"></script>
@@ -34,6 +36,4 @@
         <script src="assets/vendor/tinymce/tinymce.min.js"></script>
         <script src="assets/vendor/php-email-form/validate.js"></script>
 
-        <!-- Template Main JS File -->
-        <script src="${pageContext.request.contextPath}/js/admin/main.js"></script>
-        <script src="${pageContext.request.contextPath}/js/admin/bootstrap.bundle.min.js"></script>
+ 

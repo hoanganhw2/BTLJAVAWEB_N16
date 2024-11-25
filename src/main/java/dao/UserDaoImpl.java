@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.javatuples.Pair;
+
 import basic.BasicImpl;
 import objects.User;
 
@@ -122,7 +124,7 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 			System.out.println("User_fullname : " + resultSet.getString("user_fullname"));
 			System.out.println("User_address : " + resultSet.getString("user_address"));
 		}
-
+		
 	}
 
 	@Override

@@ -4,7 +4,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+       
 
         <title>Dashboard</title>           
         <!-- Google Fonts -->
@@ -44,13 +44,13 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed"
                     data-bs-target="#tables-nav"
-                    data-bs-toggle="collapse" href="#">
+                     href="${pageContext.request.contextPath}/admin/product">
                         <i class="bi bi-journal-text"></i><span>Sản phẩm</span > </a>                           
                 </li>
 				 <li class="nav-item">
                     <a class="nav-link collapsed"
                     data-bs-target="#tables-nav"
-                    data-bs-toggle="collapse" href="#">
+                    data-bs-toggle="collapse" href="đá">
                         <i class="bi bi-journal-text"></i><span>Đơn hàng</span > </a>                           
                 </li>
                 <li class="nav-item">
@@ -71,7 +71,6 @@
                
             </div>
             <!-- End Page Title -->
-
             <section class="section dashboard">
                 <div class="row">
                     <!-- Left side columns -->
@@ -293,7 +292,11 @@
                             <!-- End Customers Card -->
 
                             <!-- Reports -->
-                        
+                       </div> 
+                       </div>
+                       </div>
+                       
+                       </section>
         </main>
         <!-- End #main -->
 	<jsp:include page ="_footer.jsp"/>

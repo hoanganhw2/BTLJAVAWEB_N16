@@ -30,7 +30,7 @@
       <div class="container-fluid">© 2024 — Shop bán điện thoại giá rẻ</div>
     </section> 
   </footer> 
-  <script src="${pageContext.request.contextPath}/js/client/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/client/bootstrap.bundle.min.js"></script>
-      <script src="${pageContext.request.contextPath}/js/client/cart.js"></script>
-        <script src="${pageContext.request.contextPath}/js/client/main.js"></script>
+  <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+      <script src="${pageContext.request.contextPath}/js/cart.js"></script>
+        <script src="${pageContext.request.contextPath}/js/client.js"></script>
