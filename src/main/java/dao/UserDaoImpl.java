@@ -28,7 +28,7 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 			pre.setString(1, item.getUser_name());
 			pre.setString(2, item.getUser_pass());
 			pre.setString(3, item.getUser_fullname());
-			pre.setByte(4, item.getUser_gender());
+			pre.setBoolean(4, item.isUser_gender());
 			pre.setString(5, item.getUser_image());
 			pre.setString(6, item.getUser_email());
 			pre.setString(7, item.getUser_phone());
@@ -56,7 +56,7 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 			pre.setString(1, item.getUser_name());
 			pre.setString(2, item.getUser_pass());
 			pre.setString(3, item.getUser_fullname());
-			pre.setByte(4, item.getUser_gender());
+			pre.setBoolean(4, item.isUser_gender());
 			pre.setString(5, item.getUser_image());
 			pre.setString(6, item.getUser_email());
 			pre.setString(7, item.getUser_phone());
@@ -124,6 +124,7 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 			System.out.println("User_fullname : " + resultSet.getString("user_fullname"));
 			System.out.println("User_address : " + resultSet.getString("user_address"));
 		}
+	
 		
 	}
 
