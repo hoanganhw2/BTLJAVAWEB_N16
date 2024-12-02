@@ -1,13 +1,14 @@
-package dao;
+package dao.impl;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.javatuples.Pair;
+
 
 import basic.BasicImpl;
+import dao.UserDao;
 import objects.User;
 
 public class UserDaoImpl extends BasicImpl implements UserDao {

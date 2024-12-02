@@ -1,13 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <jsp:include page="../layout/_link.jsp"></jsp:include>
 <title>Quản lý sản phẩm</title>
-
+	<style type="text/css">
+	.hover-primary:hover{
+	background-color: #4154f1 !important;
+	color:white !important;
+}</style>
 </head>
 <body>
 	<jsp:include page="../layout/_header.jsp" />
@@ -27,63 +32,92 @@
 		</div>
 		<!-- End Page Title -->
 		<div class="d-flex justify-content-between">
-			<span class="fs-3 text-primary">Cập nhật sản phẩm</span> <a
-				class="btn btn-primary">Quay lại</a>
+			<span class="fs-3 text-primary">Thêm mới sản phẩm</span> 
 		</div>
 		<hr>
-		<form class="row" method="post">
-			<div class="col-md-6 col-12 ">
-				<label class="form-label">Tên sản phẩm</label> <input
+		<form class="row" method="post" action="${pageContext.request.contextPath}/admin/product/add"   enctype="multipart/form-data">
+			
+			
+			<div class=" col-12 mb-2">
+				<label class="form-label">ID</label>
+				<input class="form-control" value="${product.product_id}" disabled="disabled" />
+			</div>
+			<div class="col-md-6 col-12 mb-2">
+				<label class="form-label ">Tên sản phẩm</label> 
+				<input type="text" required="required" name="product_name" value="${product.product_name }"
+					class="form-control ${not empty errors['errorName'] ? 'is-invalid' : ''}">
+					<span class="text-danger">
+      				<c:out value="${errors['errorName']}"/>
+    		</span>
+			</div>
+			
+			<div class="col-md-6 col-12 mb-2 ">
+				<label class="form-label">Giá</label> 
+				
+				<input type="number" class="form-control ${not empty errors['errorPrice'] ? 'is-invalid' : ''}" 
+       required="required" name="product_price" 
+       value="${product.product_price }" />
+					<span class="text-danger">
+      				<c:out value="${errors['errorPrice']}"/>
+      				</span>
+			</div>
+			<div class=" col-12 mb-2">
+				<label class="form-label">Thông số</label> 
+				<input type ="text" required="required" name="product_shortdesc" value="${product.product_shortdesc}"
 					class="form-control">
+					    				
 			</div>
-			<div class="col-md-6 col-12 ">
-				<label class="form-label">Mô tả</label> <input class="form-control">
-			</div>
-			<div class="col-md-6 col-12 ">
-				<label class="form-label">Giá</label> <input class="form-control"
-					type="number">
-			</div>
-			<div class="col-md-6 col-12 ">
-				<label class="form-label">Thông số</label> <input
-					class="form-control">
-			</div>
-			<div class="mb-3 col-12 ">
+			<div class="mb-3 col-12  mb-2">
 				<label class="form-lable">Mô tả chi tiết</label>
-				<textarea class="form-control"></textarea>
+				<textarea class="form-control" required="required" name="product_description"  >${product.product_description}</textarea>
 			</div>
-			<div class="col-md-6 col-12 ">
-				<label class="form-label">Số lượng</label> <input
-					class="form-control">
+			<div class="col-md-6 col-12 mb-2">
+				<label class="form-label">Số lượng</label> <input type="number" required="required" name="product_quantity" value="${product.product_quantity}"
+					class="form-control ${not empty errors['Quantity'] ? 'is-invalid' : ''}">
+					<span class="text-danger">
+      				<c:out value="${errors['errorQuantity']}"/></span>
 			</div>
-			<div class="col-md-6 col-12 ">
-				<label class="form-label">Giá khuyến mãi</label> <input
-					class="form-control" type="number">
+			<div class="col-md-6 col-12 mb-2 ">
+				<label class="form-label">Giá khuyến mãi</label> <input required="required" name="product_discount" value= "${product.product_discount}"
+					class="form-control ${not empty errors['errorDiscount'] ? 'is-invalid' : ''}" type="number">
+					<span class="text-danger">
+      				<c:out value="${errors['errorDiscount']}"/></span>
 			</div>
-			<div class="col-md-4 col-12">
-				<label class="form-label">Hãng</label> <select class="form-select"
+			<div class="col-md-4 col-12 mb-2 ">
+				<label class="form-label">Ảnh</label> <input type="file" required="required" name="file"
+					class="form-control" id="fileInput" >
+			</div>
+			<div class="col-md-4 col-12 mb-2">
+				<label class="form-label">Hãng</label> <select class="form-select" name="product_category"
 					aria-label="Default select example">
-					<option class="hover-primary" selected>Apple</option>
-					<option class="hover-primary" value="1">SamSung</option>
-					<option class="hover-primary" value="2">Vivo</option>
-					<option class="hover-primary" value="3">Xiaomi</option>
-					<option class="hover-primary" value="4">Realme</option>
-					<option class="hover-primary" value="5">Oppo</option>
+					<c:forEach var="category" items="${categorys}">
+						<option class="hover-primary" value="${category.category_id}">${ category.category_name}</option>
+					</c:forEach>
+					
+					
 				</select>
 			</div>
-			<div class="col-md-4 col-12">
+			<div class="col-md-4 col-12 mb-2">
 				<label class="form-label ">Chuyên dùng</label> <select
-					class="form-select">
-					<option selected>Gaming</option>
-					<option class="hover-primary" value="1">Văn phòng</option>
-					<option class="hover-primary" value="2">Doanh nhân</option>
-					<option class="hover-primary" value="3">Mỏng nhẹ</option>
-					<option class="hover-primary" value="4">Đồ họa</option>
-					<option class="hover-primary" value="5">Giá rẻ</option>
+					class="form-select" name="product_target">
+					<option  class="hover-primary"  value="Gaming">Gaming</option>
+					<option class="hover-primary" value="Văn phòng">Văn phòng</option>
+					<option class="hover-primary" value="Doanh nhân">Doanh nhân</option>
+					<option class="hover-primary" value="Mỏng nhẹ">Mỏng nhẹ</option>
+					<option class="hover-primary" value="Đồ họa">Đồ họa</option>
+					<option class="hover-primary" value="Giá rẻ">Giá rẻ</option>
 				</select>
 			</div>
-			<div class="col-md-4 col-12">
-				<label class="form-label">Ảnh</label> <input type="file"
-					class="form-control">
+
+			<div class="col-md-4 col-12 text-center mb-2">
+
+				<img class=" rounded" style="max-height:250px;display: none;"
+					alt="product image" id="imagePreview" />
+
+			</div>
+			<div class="text-center ">
+				<input class="col-md-4 col-12 btn  btn-warning " value="Cập nhật" 
+					type="submit">
 			</div>
 		</form>
 
@@ -92,7 +126,23 @@
 
 	</main>
 	<!-- End #main -->
+	<script> 
+    const fileInput = document.getElementById('fileInput');
+    const imagePreview = document.getElementById('imagePreview');
+
+    fileInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
 	<jsp:include page="../layout/_footer.jsp"></jsp:include>
+
 </body>
 </html>
-tml>

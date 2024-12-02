@@ -1,14 +1,4 @@
-/**
-* Template Name: NiceAdmin
-* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-* Updated: Apr 20 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
-/*--------------------------------------------------------------
-# General
---------------------------------------------------------------*/
 :root {
 	scroll-behavior: smooth;
 }
@@ -160,25 +150,10 @@ h1, h2, h3, h4, h5, h6 {
 	}
 }
 
-@
-keyframes dropdown-animate { 0% {
-	opacity: 0;
-}
+@keyframes dropdown-animate { 0%{opacity: 0;}
 
-100
-%
-{
-opacity
-:
-1;
-}
-0
-%
-{
-opacity
-:
-0;
-}
+100%{opacity:1;}
+0%{opacity:0;}
 }
 
 /* Light Backgrounds */
@@ -1152,19 +1127,11 @@ opacity
 	background: #5969f3;
 }
 
-@
-keyframes animate-loading { 0% {
+@keyframes animate-loading { 0% {
 	transform: rotate(0deg);
 }
 
-100
-%
-{
-transform
-:
-rotate(
-360deg
-);
+100%{transform:rotate(360deg);
 }
 }
 
@@ -1230,4 +1197,8 @@ rotate(
 
 th, td, tr {
 	text-align: center;
+}
+.hover-primary:hover{
+	background-color: #4154f1 !important;
+	color:white !important;
 }

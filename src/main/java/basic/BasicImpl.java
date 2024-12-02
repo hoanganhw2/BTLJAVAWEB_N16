@@ -12,7 +12,7 @@ import JDBCUtils.ConnectionPoolImpl;
 public class BasicImpl implements Basic {
 	protected String objectname;
 	// chia se ket noi
-	private ConnectionPool cp = ConnectionPoolImpl.getInstance();
+	private  ConnectionPool cp = ConnectionPoolImpl.getInstance();
 	// su dung kêt noi
 	protected Connection con;
 
@@ -40,6 +40,7 @@ public class BasicImpl implements Basic {
 					return false;
 				}
 				this.con.commit();
+				
 				return true;
 			}
 		} catch (SQLException e) {
@@ -51,6 +52,16 @@ public class BasicImpl implements Basic {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}finally {
+			try {
+				if(pre !=null) {
+					pre.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			releaseConnection(con, "hoang anh ");
 		}
 		return false;
 	}
@@ -76,6 +87,7 @@ public class BasicImpl implements Basic {
 	@Override
 	public ResultSet get(String sql, int value) {
 		// TODO Auto-generated method stub
+		
 		try {
 			PreparedStatement pre = con.prepareStatement(sql);
 			if (value > 0) {
@@ -83,8 +95,15 @@ public class BasicImpl implements Basic {
 			}
 			return pre.executeQuery();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			try {
+				this.con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
+		}finally {
+			releaseConnection(con, "hoang anh rs");
 		}
 
 		return null;
@@ -100,8 +119,15 @@ public class BasicImpl implements Basic {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				this.con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}finally {
+			releaseConnection(con, "hanh rs2");
 		}
-
 		return null;
 	}
 
@@ -120,10 +146,16 @@ public class BasicImpl implements Basic {
 			} while (result);
 			return rs;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			try {
+				this.con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
+		}finally {
+			releaseConnection(con, "hanh rs3");
 		}
-
 		return null;
 	}
 

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet Filter implementation class EncodingFilter
  */
-@WebFilter("/EncodingFilter")
+@WebFilter("/*")
 public class EncodingFilter extends HttpFilter implements Filter {
        
     /**
@@ -36,8 +36,8 @@ public class EncodingFilter extends HttpFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-			request.setCharacterEncoding("UTF-8");
-			((HttpServletResponse)response).setCharacterEncoding("UTF-8");
+		 request.setCharacterEncoding("UTF-8"); // Đặt mã hóa cho request
+		    response.setContentType("text/html; charset=UTF-8"); // Đặt mã hóa cho response
 			chain.doFilter(request, response);
 	}
 

@@ -23,6 +23,7 @@
 						</div>
 					</form>
 				</div>
+				<c:if test="${not empty sessionScope.user}">
 				<div class="col-lg-5 col-xl-4">
 					<ul
 						class="nav col-12 col-lg-auto my-2 my-lg-0 justify-content-center justify-content-lg-end text-small">
@@ -39,6 +40,7 @@
 						</a></li>
 					</ul>
 				</div>
+				</c:if>
 			</div>
 		</div>
 	</section>

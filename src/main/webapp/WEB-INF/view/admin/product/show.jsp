@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +35,13 @@
 		</div>
 		<hr>
 		<section class="section">
+			<c:if test="${not empty msg }">
+			<div class="alert alert-success "  role="alert">
+  					${msg}
+			</div>
+			</c:if>
 			<div class="row">
+			
 				<div class="col-lg-12">
 
 					<div class="card">
@@ -53,89 +60,30 @@
 										</tr>
 									</thead>
 									<tbody>
+									<c:forEach var="product" items="${products}">
 										<tr>
-											<td>Unity Pugh</td>
-											<td>9958</td>
+											<td>${product.product_id}</td>
+											<td>${product.product_name}</td>
 											<td><img
-												src="${pageContext.request.contextPath}/img/iphone.jpg"
+												src="${pageContext.request.contextPath}/img/product/${product.product_image}"
 												style="max-height: 48px"></td>
-											<td>2005/02/11</td>
+											<td>
+												<fmt:formatNumber type="number" value="${product.product_price}" />
+                                                            VND
+											</td>
 											<td class="justify-content-arround"><a class="btn"
 												href="${pageContext.request.contextPath}/admin/product/1"><img
 													src="${pageContext.request.contextPath}/img/xem.png">
 											</a> <a class="btn"
-												href="${pageContext.request.contextPath}/admin/product/update"><img
+												href="${pageContext.request.contextPath}/admin/product/update?id=${product.product_id}"><img
 													src="${pageContext.request.contextPath}/img/edit.png">
 											</a> <a class="btn"
 												href="${pageContext.request.contextPath}/admin/product/delete?ma=1"><img
 													src="${pageContext.request.contextPath}/img/delete.png">
 											</a></td>
 										</tr>
-										<tr>
-											<td>Unity Pugh</td>
-											<td>9958</td>
-											<td>Curicó</td>
-											<td>2005/02/11</td>
-											<td class="justify-content-arround"><a class="btn"
-												href="${pageContext.request.contextPath}/product/1"><img
-													src="../img/xem.png"> </a> <a class="btn"
-												href="${pageContext.request.contextPath}/product/2"><img
-													src="../img/edit.png"> </a> <a class="btn"
-												href="${pageContext.request.contextPath}/product/2"><img
-													src="../img/delete.png"> </a></td>
-										</tr>
-										<tr>
-											<td>Unity Pugh</td>
-											<td>9958</td>
-											<td>Curicó</td>
-											<td>2005/02/11</td>
-											<td class="justify-content-arround"><a class="btn"
-												href="${pageContext.request.contextPath}/product/1"><img
-													src="../img/xem.png"> </a> <a class="btn"
-												href="${pageContext.request.contextPath}/product/2"><img
-													src="../img/edit.png"> </a> <a class="btn"
-												href="${pageContext.request.contextPath}/product/2"><img
-													src="../img/delete.png"> </a></td>
-										</tr>
-										<tr>
-											<td>Unity Pugh</td>
-											<td>9958</td>
-											<td>Curicó</td>
-											<td>2005/02/11</td>
-											<td class="justify-content-arround"><a class="btn"
-												href="${pageContext.request.contextPath}/product/1"><img
-													src="../img/xem.png"> </a> <a class="btn"
-												href="${pageContext.request.contextPath}/product/2"><img
-													src="../img/edit.png"> </a> <a class="btn"
-												href="${pageContext.request.contextPath}/product/2"><img
-													src="../img/delete.png"> </a></td>
-										</tr>
-										<tr>
-											<td>Unity Pugh</td>
-											<td>9958</td>
-											<td>Curicó</td>
-											<td>2005/02/11</td>
-											<td class="justify-content-arround"><a class="btn"
-												href="${pageContext.request.contextPath}/product/1"><img
-													src="../img/xem.png"> </a> <a class="btn"
-												href="${pageContext.request.contextPath}/product/2"><img
-													src="../img/edit.png"> </a> <a class="btn"
-												href="${pageContext.request.contextPath}/product/2"><img
-													src="../img/delete.png"> </a></td>
-										</tr>
-										<tr>
-											<td>Unity Pugh</td>
-											<td>9958</td>
-											<td>Curicó</td>
-											<td>2005/02/11</td>
-											<td class="justify-content-arround"><a class="btn"
-												href="${pageContext.request.contextPath}/product/1"><img
-													src="../img/xem.png"> </a> <a class="btn"
-												href="${pageContext.request.contextPath}/product/2"><img
-													src="../img/edit.png"> </a> <a class="btn"
-												href="${pageContext.request.contextPath}/product/2"><img
-													src="../img/delete.png"> </a></td>
-										</tr>
+										</c:forEach>
+										
 									</tbody>
 								</table>
 								<!-- End Table with stripped rows -->
@@ -145,8 +93,9 @@
 				</div>
 			</div>
 		</section>
-		</div>
+		
 		<!-- row.// -->
+		<div>
 		<nav aria-label="Page navigation">
 			<ul class="pagination justify-content-center">
 				<li class="page-item" id="prevPage"><a class="page-link"
@@ -160,6 +109,7 @@
 			</ul>
 		</nav>
 		</div>
+	
 		<!-- container.// -->
 	</main>
 	<!-- End #main -->

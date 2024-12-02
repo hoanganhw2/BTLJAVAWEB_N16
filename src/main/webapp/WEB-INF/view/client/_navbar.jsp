@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <nav
 	class="navbar navbar-main navbar-expand-lg navbar-light border-bottom">
 	<div class="container">
@@ -17,10 +18,9 @@
 						<strong><i class="bi bi-list"></i> Danh mục sản phẩm</strong>
 				</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="#">Sách giáo khoa</a></li>
-						<li><a class="dropdown-item" href="#">Sách khoa học</a></li>
-						<li><a class="dropdown-item" href="#">Truyện tranh</a></li>
-						<li><a class="dropdown-item" href="#">Tiểu thuyết</a></li>
+					<c:forEach var="category" items="${categorys}">
+						<li><a class="dropdown-item" href="#">${category.category_name }</a></li>
+					</c:forEach>	
 						<li>
 							<hr class="dropdown-divider">
 						</li>

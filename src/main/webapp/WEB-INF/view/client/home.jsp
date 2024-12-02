@@ -6,7 +6,7 @@
 
 <head>
 
-<jsp:include page="_link.jsp"></jsp:include>
+<jsp:include page="_link.jsp" />
 <title>Trang chủ</title>
 
 
@@ -28,101 +28,28 @@
 			</header>
 			<!-- section-heading.// -->
 			<div class="row item-grid">
+			<c:forEach var="category" items="${categorys}">
 				<div class="col-lg-3 col-md-6">
 					<div class="card mb-4">
 						<div class="card-body">
 							<a href="#" class="stretched-link">
 								<div class="d-flex align-items-center">
-									<img src="img/category_apple.png" class="category-img"> <span
-										class="category-title ms-3  fs-5 text-dark">Apple(Iphone)</span>
+									<img src="img/${category.category_image }" class="category-img" >
+									 <span class="category-title ms-3  fs-5 text-dark">${category.category_name}</span>
 								</div>
+								
 							</a>
 						</div>
+					
 					</div>
 				</div>
-				<!-- col.// -->
-				<div class="col-lg-3 col-md-6">
-					<div class="card mb-4">
-						<div class="card-body">
-							<a href="#" class="stretched-link">
-								<div class="d-flex align-items-center">
-									<img src="img/category_samsung.png" class="category-img">
-									<span class="category-title ms-3 fs-5 text-dark ">SamSung</span>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<!-- col.// -->
-				<div class="col-lg-3 col-md-6">
-					<div class="card mb-4">
-						<div class="card-body">
-							<a href="#" class="stretched-link">
-								<div class="d-flex align-items-center">
-									<img src="img/category_oppo.png" class="category-img"> <span
-										class="category-title ms-3  fs-5 text-dark">OPPO</span>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<!-- col.// -->
-				<div class="col-lg-3 col-md-6">
-					<div class="card mb-4">
-						<div class="card-body">
-							<a href="#" class="stretched-link">
-								<div class="d-flex align-items-center">
-									<img src="img/category_xiaomi.png" class="category-img">
-									<span class="category-title ms-3  fs-5 text-dark">Xiaomi</span>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<!-- col.// -->
-				<div class="col-lg-3 col-md-6">
-					<div class="card mb-4">
-						<div class="card-body">
-							<a href="#" class="stretched-link">
-								<div class="d-flex align-items-center">
-									<img src="img/category_realme.png" class="category-img">
-									<span class="category-title ms-3  fs-5 text-dark">Realme</span>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<!-- col.// -->
-				<div class="col-lg-3 col-md-6">
-					<div class="card mb-4">
-						<div class="card-body">
-							<a href="#" class="stretched-link">
-								<div class="d-flex align-items-center">
-									<img src="img/category_honor.png" class="category-img"> <span
-										class="category-title ms-3  fs-5 text-dark">Honor</span>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<!-- col.// -->
-				<div class="col-lg-3 col-md-6">
-					<div class="card mb-4">
-						<div class="card-body">
-							<a href="#" class="stretched-link">
-								<div class="d-flex align-items-center">
-									<img src="img/category_vivo.png" class="category-img"> <span
-										class="category-title ms-3  fs-5 text-dark">Vivo</span>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
+				</c:forEach>
 				<!-- col.// -->
 
 			</div>
 			<!-- row.// -->
 		</div>
+	
 		<!-- container.// -->
 	</section>
 	<!-- section-content.// -->

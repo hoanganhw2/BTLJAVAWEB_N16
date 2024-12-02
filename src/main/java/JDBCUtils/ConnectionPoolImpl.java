@@ -27,7 +27,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
 		this.pool = new Stack<Connection>();
 	}
 
-	public static ConnectionPool getInstance() {
+	public synchronized static ConnectionPool getInstance() {
 		if (cp == null) {
 			cp = new ConnectionPoolImpl();
 		}
@@ -36,18 +36,23 @@ public class ConnectionPoolImpl implements ConnectionPool {
 
 	@Override
 	public Connection getConnection(String objectname) throws SQLException {
-		if (pool.isEmpty()) {
-
+		
+		if (pool.isEmpty() ) {
 			System.out.println(objectname + "Đã mở 1 kêt nối");
 			return DriverManager.getConnection(url, user, password);
 		}
+		System.out.println("Kết nối được lấy từ trong pool");
 		return pool.pop();
 	}
 
 	@Override
 	public void releaseConnection(Connection con, String objectname) throws SQLException {
 		System.out.println(objectname + "Đã đóng kết nối");
-		pool.push(con);
+		pool.push(con);	
+		if(pool.size()>20) {
+			pool.clear();
+		}
+		System.out.println("Tổng số kết nối có : "+pool.size());
 
 	}
 	public static void main(String[] args) {
