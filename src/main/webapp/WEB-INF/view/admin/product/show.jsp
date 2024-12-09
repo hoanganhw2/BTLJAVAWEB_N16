@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -35,11 +35,7 @@
 		</div>
 		<hr>
 		<section class="section">
-			<c:if test="${not empty msg }">
-			<div class="alert alert-success "  role="alert">
-  					${msg}
-			</div>
-			</c:if>
+			
 			<div class="row">
 			
 				<div class="col-lg-12">
@@ -78,7 +74,7 @@
 												href="${pageContext.request.contextPath}/admin/product/update?id=${product.product_id}"><img
 													src="${pageContext.request.contextPath}/img/edit.png">
 											</a> <a class="btn"
-												href="${pageContext.request.contextPath}/admin/product/delete?ma=1"><img
+												href="${pageContext.request.contextPath}/admin/product/delete?ma=${product.product_id}"><img
 													src="${pageContext.request.contextPath}/img/delete.png">
 											</a></td>
 										</tr>
@@ -113,6 +109,37 @@
 		<!-- container.// -->
 	</main>
 	<!-- End #main -->
+	<div class="container">
+    <!-- Toast Container -->
+    <div id="toastContainer" class="position-fixed top-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Thông báo</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <c:if test="${not empty sessionScope.toastMessage}">
+                    ${sessionScope.toastMessage}
+                </c:if>
+            </div>
+        </div>
+    </div>
+</div>
+	<script>
+    $(document).ready(function() {
+        const toastMessage = "${sessionScope.toastMessage}";
+        if (toastMessage) {
+            $('#toast').toast({ delay: 3000 });
+            $('#toast').toast('show');
+            // Xóa thông báo sau khi hiển thị
+            <c:remove var="toastMessage" scope="session" />
+        }
+    });
+    
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<jsp:include page="../layout/_footer.jsp"></jsp:include>
+	
+	
 </body>
 </html>

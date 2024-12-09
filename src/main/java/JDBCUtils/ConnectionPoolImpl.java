@@ -11,7 +11,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
 	private String password;
 	private String url;
 	private Stack<Connection> pool;
-	private static ConnectionPool cp;
+	private static ConnectionPool cp=null;
 
 	public ConnectionPoolImpl() {
 		this.driver = "com.mysql.cj.jdbc.Driver";
@@ -27,37 +27,50 @@ public class ConnectionPoolImpl implements ConnectionPool {
 		this.pool = new Stack<Connection>();
 	}
 
-	public synchronized static ConnectionPool getInstance() {
+	public  static ConnectionPool getInstance() {
 		if (cp == null) {
-			cp = new ConnectionPoolImpl();
+			synchronized(ConnectionPoolImpl.class){
+				if(cp==null) {
+					cp= new ConnectionPoolImpl();
+				}
+			}
 		}
 		return cp;
 	}
 
 	@Override
-	public Connection getConnection(String objectname) throws SQLException {
+	public  Connection getConnection(String objectname) throws SQLException {
 		
-		if (pool.isEmpty() ) {
-			System.out.println(objectname + "Đã mở 1 kêt nối");
-			return DriverManager.getConnection(url, user, password);
-		}
-		System.out.println("Kết nối được lấy từ trong pool");
-		return pool.pop();
+		if (pool.isEmpty()) {
+	        System.out.println(objectname + " đã tạo kết nối mới");
+	        
+	        return DriverManager.getConnection(url, user, password);
+	    }
+	   return pool.pop();
 	}
 
+	
 	@Override
-	public void releaseConnection(Connection con, String objectname) throws SQLException {
-		System.out.println(objectname + "Đã đóng kết nối");
-		pool.push(con);	
-		if(pool.size()>20) {
-			pool.clear();
-		}
-		System.out.println("Tổng số kết nối có : "+pool.size());
+	public  void  releaseConnection(Connection con, String objectname) throws SQLException {
+		  	System.out.println(objectname+" trả kết nối về pool");
+		  	
+		  	if(con!=null) {
+		  		this.pool.push(con); 
+		  		System.out.println("Tổng số kết nối có: " + pool.size());
+		  		pool.forEach(x -> {
+		  			System.out.println(x);
+		  		});
+		  	}
+		    
 
 	}
 	public static void main(String[] args) {
 		try {
-			ConnectionPoolImpl.getInstance().getConnection("Hoang anh");
+			
+		Connection con =	ConnectionPoolImpl.getInstance().getConnection("Hoang anh");
+		
+		
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

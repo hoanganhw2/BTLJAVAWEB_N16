@@ -1,10 +1,7 @@
-/objects/
+/Controller/
 /dao/
 /service/
-/dto/
-/ValidateUtil.class
-/ValidateUtils/
-/Controller/
 /basic/
-/JDBCUtils/
 /filter/
+/ValidateUtils/
+/objects/

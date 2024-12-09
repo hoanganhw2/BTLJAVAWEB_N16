@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -32,19 +32,23 @@
 		</div>
 		<!-- End Page Title -->
 		<div class="d-flex justify-content-between">
-			<span class="fs-3 text-primary">Thêm mới sản phẩm</span> 
+			<span class="fs-3 text-primary">Cập nhật sản phẩm</span> 
 		</div>
+		<c:if test="${not empty msg }">
+			<div class="alert alert-success "  role="alert">
+  					${msg}
+			</div>
+			</c:if>
 		<hr>
-		<form class="row" method="post" action="${pageContext.request.contextPath}/admin/product/add"   enctype="multipart/form-data">
-			
-			
+		<hr>
+		<form class="row" method="post" action="${pageContext.request.contextPath}/admin/product/update"   enctype="multipart/form-data">
 			<div class=" col-12 mb-2">
 				<label class="form-label">ID</label>
-				<input class="form-control" value="${product.product_id}" disabled="disabled" />
+				<input class="form-control" value="${product.product_id}"  readonly="readonly"  name="id" >
 			</div>
 			<div class="col-md-6 col-12 mb-2">
 				<label class="form-label ">Tên sản phẩm</label> 
-				<input type="text" required="required" name="product_name" value="${product.product_name }"
+				<input type="text" required="required" name="product_name" value="${product.product_name}"
 					class="form-control ${not empty errors['errorName'] ? 'is-invalid' : ''}">
 					<span class="text-danger">
       				<c:out value="${errors['errorName']}"/>
@@ -53,32 +57,33 @@
 			
 			<div class="col-md-6 col-12 mb-2 ">
 				<label class="form-label">Giá</label> 
-				
-				<input type="number" class="form-control ${not empty errors['errorPrice'] ? 'is-invalid' : ''}" 
-       required="required" name="product_price" 
-       value="${product.product_price }" />
+				<input  type="number"  value="${product.product_price}"
+				class="form-control ${not empty errors['errorPrice'] ? 'is-invalid' : ''}" required="required" name="product_price"
+					type="number">
 					<span class="text-danger">
       				<c:out value="${errors['errorPrice']}"/>
       				</span>
 			</div>
 			<div class=" col-12 mb-2">
 				<label class="form-label">Thông số</label> 
-				<input type ="text" required="required" name="product_shortdesc" value="${product.product_shortdesc}"
+				<input type ="text" required="required" name="product_shortdesc" value="${product.product_shortdesc }"
 					class="form-control">
 					    				
 			</div>
 			<div class="mb-3 col-12  mb-2">
 				<label class="form-lable">Mô tả chi tiết</label>
-				<textarea class="form-control" required="required" name="product_description"  >${product.product_description}</textarea>
+				<textarea class="form-control" required="required" name="product_description" >${product.product_description }</textarea>
 			</div>
 			<div class="col-md-6 col-12 mb-2">
-				<label class="form-label">Số lượng</label> <input type="number" required="required" name="product_quantity" value="${product.product_quantity}"
+				<label class="form-label">Số lượng</label> 
+				<input type="number" required="required" name="product_quantity" value="${product.product_quantity }"
 					class="form-control ${not empty errors['Quantity'] ? 'is-invalid' : ''}">
 					<span class="text-danger">
       				<c:out value="${errors['errorQuantity']}"/></span>
 			</div>
 			<div class="col-md-6 col-12 mb-2 ">
-				<label class="form-label">Giá khuyến mãi</label> <input required="required" name="product_discount" value= "${product.product_discount}"
+				<label class="form-label">Giá khuyến mãi</label> 
+				<input required="required" name="product_discount" value="${product.product_discount}"
 					class="form-control ${not empty errors['errorDiscount'] ? 'is-invalid' : ''}" type="number">
 					<span class="text-danger">
       				<c:out value="${errors['errorDiscount']}"/></span>
@@ -120,7 +125,6 @@
 					type="submit">
 			</div>
 		</form>
-
 
 		<br> <br>
 

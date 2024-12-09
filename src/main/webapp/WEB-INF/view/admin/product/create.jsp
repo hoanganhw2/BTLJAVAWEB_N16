@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -34,6 +34,11 @@
 			<span class="fs-3 text-primary">Thêm mới sản phẩm</span> <a
 				class="btn btn-primary">Quay lại</a>
 		</div>
+		<c:if test="${not empty msg }">
+			<div class="alert alert-success "  role="alert">
+  					${msg}
+			</div>
+			</c:if>
 		<hr>
 		<form class="row" method="post" action="${pageContext.request.contextPath}/admin/product/add"   enctype="multipart/form-data">
 			<div class="col-md-6 col-12 mb-2">

@@ -12,11 +12,18 @@ public class ProductService {
 	private ProductDao product;
 
 	public ProductService() {
-		product = new ProductDaoImpl("");
+		product = new ProductDaoImpl("Admin");
 	}
-	
+	// thêm
 	public boolean add(Product item) {
 		return this.product.addProduct(item);
+	}
+	//sửa
+	public boolean update(Product item) {
+		return this.product.editProduct(item);
+	}
+	public boolean delete(Product item) {
+		return this.product.delProduct(item);
 	}
 	public Product getProduct(int id) {
 		
@@ -38,11 +45,13 @@ public class ProductService {
 			product1.setProduct_updateAt(rs.getDate("product_updateAt"));
 				 				
 			}
+			
 			return product1;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}			
+			
+		}
 		return null;
 		
 	}
@@ -68,6 +77,7 @@ public class ProductService {
 				product1.setProduct_updateAt(resultSet.getDate("product_updateAt"));
 				products.add(product1);
 			}
+			
 			return products;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -76,6 +86,9 @@ public class ProductService {
 		
 		
 		return null;
+	}
+	public void relaseConnection() {
+		this.product.releaseConnection();
 	}
 	public static void main(String[] args) {
 		ProductService productService = new ProductService();

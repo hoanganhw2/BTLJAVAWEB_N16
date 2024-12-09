@@ -1,6 +1,7 @@
 package Controller.client;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ import service.ProductService;
 @WebServlet("/product")
 public class ProductDetailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-      ProductService productService = new ProductService();
+      ProductService productService ;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -28,19 +29,28 @@ public class ProductDetailController extends HttpServlet {
     }
     @Override
     public void init() throws ServletException {
-    	// TODO Auto-generated method stub
     	super.init();
+    	productService= new ProductService();
+    	System.out.println("productService xem san pham dc tao");
+    	
+    	
     }
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Product product = this.productService.getProduct(1);
-		request.setAttribute("product", product);
+		Optional<String> id = Optional.of(request.getParameter("id"));
+		if(id.isPresent() && Integer.parseInt(id.get().toString())>=1) {
+			Product product = this.productService.getProduct(Integer.parseInt(id.get().toString()));
+			this.productService.relaseConnection();
+			request.setAttribute("product", product);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/client/productDetail.jsp");
+	        dispatcher.forward(request, response);
+		}else {
+			response.sendRedirect(request.getContextPath()+"/");
+		}
 		
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/client/productDetail.jsp");
-        dispatcher.forward(request, response);
 	}
 
 	/**

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -33,7 +33,7 @@
 			<div class="alert alert-warning" role="alert">Bạn có chắc muốn
 				xóa sản phẩm này không?</div>
 			<form method="post"
-				action="${pageContext.request.contextPath}/admin/product/delete">
+				action="${pageContext.request.contextPath}/admin/product/delete?id=${id}">
 				<div class="mb-3" style="display: none">
 					<label class="label-form">ID</label> <input class="form-control"
 						value=${id } type="text">

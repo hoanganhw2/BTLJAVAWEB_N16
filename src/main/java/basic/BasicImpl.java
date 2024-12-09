@@ -18,29 +18,34 @@ public class BasicImpl implements Basic {
 
 	public BasicImpl(String objectname) {
 		this.objectname = objectname;
-
-		try {
-			con = cp.getConnection(this.objectname);
+		try {	
+				con = cp.getConnection(this.objectname);
+				
 			if (con.getAutoCommit()) {
+				
 				con.setAutoCommit(false);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 	}
 
 	public boolean exe(PreparedStatement pre) {
+		
 		try {
+			
+			if (con.getAutoCommit()) {
+				
+				con.setAutoCommit(false);
+			}
 			if (pre != null) {
 				int result = pre.executeUpdate();
 				if (result == 0) {
 					this.con.rollback();
-					return false;
 				}
-				this.con.commit();
-				
+				this.con.commit();			
 				return true;
 			}
 		} catch (SQLException e) {
@@ -52,16 +57,6 @@ public class BasicImpl implements Basic {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		}finally {
-			try {
-				if(pre !=null) {
-					pre.close();
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			releaseConnection(con, "hoang anh ");
 		}
 		return false;
 	}
@@ -86,7 +81,17 @@ public class BasicImpl implements Basic {
 
 	@Override
 	public ResultSet get(String sql, int value) {
-		// TODO Auto-generated method stub
+		try {
+			if(con==null) {
+				con=ConnectionPoolImpl.getInstance().getConnection("");
+			}
+			if(con.getAutoCommit()) {
+				con.setAutoCommit(false);
+			}
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		try {
 			PreparedStatement pre = con.prepareStatement(sql);
@@ -95,28 +100,31 @@ public class BasicImpl implements Basic {
 			}
 			return pre.executeQuery();
 		} catch (SQLException e) {
+				
 			try {
 				this.con.rollback();
+				
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
-		}finally {
-			releaseConnection(con, "hoang anh rs");
 		}
-
+		
 		return null;
 	}
 
 	@Override
 	public ResultSet get(String sql, String username, String userpass) {
+		PreparedStatement pre =null;
+		
 		try {
-			PreparedStatement pre = con.prepareStatement(sql);
+			pre= con.prepareStatement(sql);
 			pre.setString(1, username);
 			pre.setString(2, userpass);
 			return pre.executeQuery();
 		} catch (SQLException e) {
+		
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			try {
@@ -125,8 +133,13 @@ public class BasicImpl implements Basic {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		}finally {
-			releaseConnection(con, "hanh rs2");
+			try {
+				pre.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
 		}
 		return null;
 	}
@@ -152,21 +165,52 @@ public class BasicImpl implements Basic {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			e.printStackTrace();
-		}finally {
-			releaseConnection(con, "hanh rs3");
 		}
 		return null;
 	}
 
 	@Override
-	public void releaseConnection(Connection con, String objectname) {
+	public void releaseConnection() {
 		try {
-			this.cp.releaseConnection(con, objectname);
+	        if(con != null) {
+	        	this.cp.releaseConnection(con, objectname);
+	        	if(!con.getAutoCommit()) {
+	        		con.setAutoCommit(true);
+	        	}
+	        	con=null;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	@Override
+	public ResultSet get(String sql, String name) {
+				PreparedStatement pre =null;	
+		try {
+			pre= con.prepareStatement(sql);
+			pre.setString(1, name);
+		
+			return pre.executeQuery();
 		} catch (SQLException e) {
+		
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				this.con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				pre.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
 		}
+		return null;
 	}
 
 }

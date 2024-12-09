@@ -1,9 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<fmt:setLocale value="vi_VN" />
-<header class="section-header">
+    pageEncoding="UTF-8"%>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="css/client.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-icons.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<title>Insert title here</title>
+
+</head>
+<body>
+	<header class="section-header">
 	<section class="header-main border-bottom">
 		<div class="container">
 			<div class="row align-items-center">
@@ -36,8 +45,8 @@
    											 Tài khoản </span>
   
   								<ul class="dropdown-menu">
-    								<li><a class="dropdown-item" href="#">Thông tin tài khoản</a></li>
-    								<li><a class="dropdown-item" href="#">Sản phẩm yêu thích</a></li>
+    								<li><a class="dropdown-item" href="#">Action</a></li>
+    								<li><a class="dropdown-item" href="#">Action two</a></li>
     								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Đăng xuất</a></li>
   								</ul>
 </div>
@@ -57,3 +66,6 @@
 		</div>
 	</section>
 </header>
+
+</body>
+</html>

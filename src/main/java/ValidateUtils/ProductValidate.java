@@ -14,7 +14,8 @@ public class ProductValidate {
 	// kiểm tra tên
 	public boolean validateProductName(String ProductName) {
 		boolean flag = true ;
-		if(ProductName.trim().equals("") || ProductName.length() <6 ){
+		
+		if(ProductName.trim().equals("") || ProductName.length() <6 || ProductName==null ){
 			flag=false ;
 		}	
 		return flag ;

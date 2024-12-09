@@ -20,7 +20,7 @@ public class User {
 	private String user_pass;
 	private String user_image;
 	private String user_fullname;
-	private boolean user_gender;
+	private	int user_gender;
 	private String user_email;
 	private String user_phone;
 	private String user_address;

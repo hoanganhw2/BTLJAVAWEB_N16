@@ -5,31 +5,31 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
-
+import JDBCUtils.ConnectionPoolImpl;
 import basic.BasicImpl;
 import dao.UserDao;
-import objects.User;
+import objects.*;
 
 public class UserDaoImpl extends BasicImpl implements UserDao {
 
 	public UserDaoImpl(String objectname) {
 		super(objectname);
 		// TODO Auto-generated constructor stub
+	
 	}
-
+	
 	@Override
 	public boolean addUser(User item) {
 		try {
+			
 			StringBuilder sql = new StringBuilder();
-			sql.append(
-					"INSERT INTO user_name,user_pass,user_fullname,user_gender,user_image,user_email,user_phone,user_address,user_role");
-			sql.append("VLUES ").append("(?,md5(?),?,?,?,?,?,?)");
+			sql.append("INSERT INTO tbluser (user_name, user_pass, user_fullname, user_gender, user_image, user_email, user_phone, user_address, user_role, user_createAt) ");
+			sql.append("VALUES (?, md5(?), ?, ?, ?, ?, ?, ?, ?, now())");
 			PreparedStatement pre = con.prepareStatement(sql.toString());
 			pre.setString(1, item.getUser_name());
 			pre.setString(2, item.getUser_pass());
 			pre.setString(3, item.getUser_fullname());
-			pre.setBoolean(4, item.isUser_gender());
+			pre.setInt(4, item.getUser_gender());
 			pre.setString(5, item.getUser_image());
 			pre.setString(6, item.getUser_email());
 			pre.setString(7, item.getUser_phone());
@@ -52,12 +52,12 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 			sql.append("UPDATE tbluser ").append("SET ");
 			sql.append(
 					"user_name = ? , user_pass = ?,user_fullname = ?,user_gender = ?,user_image = ? ,user_email =?,user_phone = ?,user_address = ?,user_role = ?");
-			sql.append("WHERE user_id = ? ");
+			sql.append(" WHERE user_id = ? ");
 			PreparedStatement pre = con.prepareStatement(sql.toString());
 			pre.setString(1, item.getUser_name());
 			pre.setString(2, item.getUser_pass());
 			pre.setString(3, item.getUser_fullname());
-			pre.setBoolean(4, item.isUser_gender());
+			pre.setInt(4, item.getUser_gender());
 			pre.setString(5, item.getUser_image());
 			pre.setString(6, item.getUser_email());
 			pre.setString(7, item.getUser_phone());
@@ -87,25 +87,64 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 		}
 		return false;
 	}
-
+	public boolean isUser(String name) {
+		boolean flag = false ;
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT * FROM tbluser WHERE user_name = ?");
+		sql.append("");
+		ResultSet rs = get(sql.toString(), name);
+		try {
+			if(rs.next()) {
+				flag=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return flag;
+	}
 	@Override
 	public ResultSet getUser(int id) {
+		
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT user_name,user_pass,user_fullname,user_email,user_phone,user_address");
-		sql.append("WHERE user_id = ? ");
+		sql.append(" WHERE user_id = ? ");
 		return get(sql.toString(), id);
 	}
 
 	@Override
 	public ResultSet getUser(String username, String userpass) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT user_name,user_pass");
-		sql.append("WHERE user_id = ?");
+		sql.append("SELECT user_id,user_name,user_pass,user_image,user_fullname,user_gender,user_email,user_phone,user_address,user_role,user_createAt,user_updateAt,role_name");
+		sql.append(" ").append("FROM tbluser ");
+			
+		sql.append("INNER JOIN tblrole ON tbluser.user_role = tblrole.role_id")	;
+		sql.append(" ");			
+		sql.append(" WHERE user_name= ? and user_pass = md5(?)" );
 		return get(sql.toString(), username, userpass);
 	}
 
 	@Override
 	public ArrayList<ResultSet> getUsers(String multiselect) {
+		try {
+			if(con==null) {
+				con=ConnectionPoolImpl.getInstance().getConnection("");
+			}
+			if(con.getAutoCommit()) {
+				con.setAutoCommit(false);
+			}
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		if (multiselect != null && !multiselect.trim().equals("")) {
 			return gets(multiselect);
 		} else {
@@ -114,23 +153,21 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 			return gets(sqlBuilder.toString());
 		}
 	}
-
-	public static void main(String[] args) throws SQLException {
-		UserDao userDao = new UserDaoImpl("User");
-		ArrayList<ResultSet> rs = userDao.getUsers("");
-		ResultSet resultSet = rs.get(0);
-		while (resultSet.next()) {
-			System.out.println("User_name : " + resultSet.getString("user_name"));
-			System.out.println("User_pass: " + resultSet.getString("user_pass"));
-			System.out.println("User_fullname : " + resultSet.getString("user_fullname"));
-			System.out.println("User_address : " + resultSet.getString("user_address"));
-		}
 	
-		
-	}
 
 	@Override
 	public ArrayList<ResultSet> getUsers(String multiselect, int at, int total) {
+		try {
+			if(con==null) {
+				con=ConnectionPoolImpl.getInstance().getConnection("");
+			}
+			if(con.getAutoCommit()) {
+				con.setAutoCommit(false);
+			}
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT * FROM tbluser ");
 		sql.append(" ");
@@ -139,8 +176,13 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 
 		// Dem so luong nguoi su dung
 		sql.append("SELECT COUNT(user_id) AS total FROM tbluser;");
+		
 
 		return this.gets(sql.toString());
 
 	}
+	
+	
+	
+	
 }

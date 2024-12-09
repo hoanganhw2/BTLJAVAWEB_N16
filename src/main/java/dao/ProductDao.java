@@ -2,9 +2,11 @@ package dao;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import basic.ShareControl;
 import objects.*;
 
-public interface ProductDao {
+public interface ProductDao extends ShareControl {
 	boolean addProduct(Product item);
 
 	boolean editProduct(Product item);
@@ -16,4 +18,5 @@ public interface ProductDao {
 	ArrayList<ResultSet> getProducts(String multiselect);
 
 	ArrayList<ResultSet> Products(String multiselect, int at, int total);
+	
 }

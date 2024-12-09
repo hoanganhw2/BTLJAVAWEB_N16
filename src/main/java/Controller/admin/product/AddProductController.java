@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.javatuples.Pair;
+
 import ValidateUtils.ProductValidate;
 import objects.Category;
 import objects.Product;
@@ -51,8 +53,9 @@ public class AddProductController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Category> categorys = userService.getAllCategory();		
-		request.setAttribute("categorys", categorys);
+		Pair<List<Category>, List<Product>> pair = this.userService.getProductAndCategory();
+		request.setAttribute("categorys", pair.getValue(0));
+		this.productService.relaseConnection();
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/view/admin/product/create.jsp");
 		requestDispatcher.forward(request, response);
 	}
@@ -62,7 +65,7 @@ public class AddProductController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			int countError = 0;
-			String url ="";
+		
 		 String product_name = request.getParameter("product_name").toString(); 		
 		 String product_shortdesc=request.getParameter("product_shortdesc").toString(); 
 		 String product_description=request.getParameter("product_description").toString(); 
@@ -108,18 +111,14 @@ public class AddProductController extends HttpServlet {
 			 product.setProduct_image(image_name);
 			 product.setProduct_target(product_target);
 			 product.setProduct_category(category);
-			 if(this.productService.add(product)==false)
+			 if(this.productService.add(product))
 			 {
-				 String msg = "Thêm thất bại";
-				 request.setAttribute("msg", msg);
-				 doGet(request, response);
+				 response.sendRedirect(request.getContextPath()+"/admin/product");
 			 }
-			 String msg ="Thêm thành công";
-			 request.setAttribute("msg", msg);
-			 url="/WEB-INF/view/admin/product/show.jsp";	 
+			 
+			 
 		 }
-		RequestDispatcher dispatcher= request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
+		
 		 
 	}
 	

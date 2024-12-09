@@ -4,13 +4,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import JDBCUtils.ConnectionPoolImpl;
 import basic.BasicImpl;
 import dao.CategoryDao;
 import objects.Category;
 
 public class CategoryDaoImpl extends BasicImpl implements CategoryDao {
 
-	
 
 	public CategoryDaoImpl(String objectname) {
 		super(objectname);
@@ -21,6 +21,14 @@ public class CategoryDaoImpl extends BasicImpl implements CategoryDao {
 
 	@Override
 	public ArrayList<ResultSet> getCategorys(String multiselect) {
+		if(con==null) {
+			try {
+				con = ConnectionPoolImpl.getInstance().getConnection("");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		if(multiselect!=null && !multiselect.trim().equals("")){
 			return this.gets(multiselect);
 		}else
@@ -46,4 +54,7 @@ public class CategoryDaoImpl extends BasicImpl implements CategoryDao {
 		}
 	}
 
+
+
+	
 }

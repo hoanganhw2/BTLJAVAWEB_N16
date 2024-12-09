@@ -33,11 +33,14 @@
 				<li class="nav-item"><a class="nav-link" href="#">Khuyến
 						mãi</a></li>
 			</ul>
-			<a class="btn btn-light me-2"
+			<c:if test="${ empty sessionScope.user}">
+				<a class="btn btn-light me-2"
 				href="${pageContext.request.contextPath}/register" role="button">Đăng
-				ký</a> <a class="btn btn-primary"
+				ký</a> 
+				<a class="btn btn-primary"
 				href="${pageContext.request.contextPath}/login" role="button">Đăng
 				nhập</a>
+			</c:if>
 		</div>
 	</div>
 	<!-- container.// -->

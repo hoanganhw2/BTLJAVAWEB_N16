@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.javatuples.Pair;
+
 import objects.Category;
+import objects.Product;
 import service.UserService;
 
 
@@ -20,7 +23,10 @@ public class HomePageController extends HttpServlet {
     private UserService userService ;
    
     public HomePageController() {
-    		super(); 
+    	super(); 
+    	
+    	
+    	
     }
 
 	
@@ -30,11 +36,14 @@ public class HomePageController extends HttpServlet {
     	super.init();
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Category> categorys = userService.getAllCategory();
-		request.setAttribute("categorys", categorys);
+		Pair<List<Category>, List<Product>>  pair= userService.getProductAndCategory();	
+		this.userService.relaseConnection();
+		request.setAttribute("categorys", pair.getValue(0));
+		request.setAttribute("products", pair.getValue(1));
 		request.setAttribute("title","Trang chủ");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/client/home.jsp");
 	        dispatcher.forward(request, response);
+	       
 	}
 
 	
