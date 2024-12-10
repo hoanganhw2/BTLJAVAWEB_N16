@@ -85,9 +85,9 @@
 					class="form-control" id="fileInput" >
 			</div>
 			<div class="col-md-4 col-12 mb-2">
-				<label class="form-label">Hãng</label> <select class="form-select" name="product_category"
+				<label class="form-label">Hãng</label> <select class="form-select" name="product_category" 
 					aria-label="Default select example">
-					<c:forEach var="category" items="${categorys}">
+					<c:forEach var="category" items="${categoris}">
 						<option class="hover-primary" value="${category.category_id}">${ category.category_name}</option>
 					</c:forEach>
 					

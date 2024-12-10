@@ -31,7 +31,7 @@ maxFileSize=1024*1024*50,      	// 50 MB
 maxRequestSize=1024*1024*100)   //100 MB
 public class AddProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private UserService userService;
+
     private UploadFileService uploadFileService;
     private ProductService productService;
     private final String folder = "product";
@@ -44,7 +44,7 @@ public class AddProductController extends HttpServlet {
     }
     @Override
     public void init() throws ServletException {
-    	this.userService= new UserService();
+    
     	this.uploadFileService = new UploadFileService();
     	this.productService= new ProductService();
     	super.init();
@@ -53,8 +53,8 @@ public class AddProductController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Pair<List<Category>, List<Product>> pair = this.userService.getProductAndCategory();
-		request.setAttribute("categorys", pair.getValue(0));
+		List<Category> categories = productService.getAllCegory();
+		request.setAttribute("categoris", categories);
 		this.productService.relaseConnection();
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/view/admin/product/create.jsp");
 		requestDispatcher.forward(request, response);
@@ -76,6 +76,7 @@ public class AddProductController extends HttpServlet {
 		 String product_target=request.getParameter("product_target").toString(); 
 		 String product_category=request.getParameter("product_category").toString(); 
 		 Map<String, String> errors = new HashMap<String, String>();
+		 System.out.println(product_category);
 		 if(!ProductValidate.getProductValidate().validateProductName(product_name)) {
 			 errors.put("errorName", "Tên phải từ 6 ký tự");	
 			 countError ++ ;
@@ -92,6 +93,7 @@ public class AddProductController extends HttpServlet {
 			 errors.put("errorQuantity","Số lượng phải lớn hơn hoặc bằng 0");
 			 countError ++ ;
 		 }
+		
 		 if(countError !=0) {
 			 request.setAttribute("errors", errors);
 			doGet(request, response);
@@ -112,14 +114,13 @@ public class AddProductController extends HttpServlet {
 			 product.setProduct_target(product_target);
 			 product.setProduct_category(category);
 			 if(this.productService.add(product))
-			 {
+			 {	
+				 this.productService.relaseConnection();	
 				 response.sendRedirect(request.getContextPath()+"/admin/product");
 			 }
+					
 			 
-			 
-		 }
-		
-		 
+	 }	 
 	}
 	
 }

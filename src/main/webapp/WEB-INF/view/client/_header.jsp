@@ -24,7 +24,7 @@
 					</form>
 				</div>
 				
-				
+				<c:if test="${not empty user }">
 				<div class="col-lg-5 col-xl-4">
 				
 					<ul
@@ -40,7 +40,7 @@
     								<li><a class="dropdown-item" href="#">Sản phẩm yêu thích</a></li>
     								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Đăng xuất</a></li>
   								</ul>
-</div>
+								</div>
 								</li>
 						<li><a href="#" class="nav-link text-body"> <i
 								class="bi bi-list-check d-block text-center fs-3"></i> <p class="mt-2">Đơn hàng</p>
@@ -52,6 +52,7 @@
 						</a></li>
 					</ul>
 				</div>
+				</c:if>
 				
 			</div>
 		</div>

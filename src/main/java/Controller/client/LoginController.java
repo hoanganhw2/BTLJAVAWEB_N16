@@ -65,7 +65,8 @@ public class LoginController extends HttpServlet {
 			System.out.println(user.getUser_name());
 			System.out.println(user.getUser_pass());
 			HttpSession session=  request.getSession();
-			session.setAttribute("user",user);
+			session.setAttribute("user",pair);
+			session.setAttribute("id", user.getUser_id());
 			session.setAttribute("login", "Đăng nhập thành công!");
 			response.sendRedirect(request.getContextPath()+"/");
 			
