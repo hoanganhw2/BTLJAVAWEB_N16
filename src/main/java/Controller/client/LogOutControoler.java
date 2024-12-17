@@ -27,9 +27,8 @@ public class LogOutControoler extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		session.removeAttribute("user");
-		session.removeAttribute("id");
+		HttpSession session = request.getSession(false);
+		session.invalidate();
 		response.sendRedirect(request.getContextPath()+"/login");
 	}
 

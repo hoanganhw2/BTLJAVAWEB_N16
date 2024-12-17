@@ -113,6 +113,7 @@ public class AddProductController extends HttpServlet {
 			 product.setProduct_image(image_name);
 			 product.setProduct_target(product_target);
 			 product.setProduct_category(category);
+			 
 			 if(this.productService.add(product))
 			 {	
 				 this.productService.relaseConnection();	

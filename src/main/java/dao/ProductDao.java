@@ -12,8 +12,10 @@ public interface ProductDao extends ShareControl {
 	boolean editProduct(Product item);
 
 	boolean delProduct(Product item);
+	boolean addProductReview(ProductReview item);
 
 	ResultSet getProduct(int id);
+	ArrayList<ResultSet> getProductAndReview(int id);
 	
 	ArrayList<ResultSet> getProducts(String multiselect);
 

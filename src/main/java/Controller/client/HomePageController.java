@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.javatuples.Pair;
+import org.javatuples.Triplet;
 
 import objects.Category;
 import objects.Product;
@@ -36,11 +37,24 @@ public class HomePageController extends HttpServlet {
     	super.init();
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Pair<List<Category>, List<Product>>  pair= userService.getProductAndCategory();	
-		this.userService.relaseConnection();
-		request.setAttribute("categorys", pair.getValue(0));
-		request.setAttribute("products", pair.getValue(1));
+		int page = 1;
+        int recordsPerPage = 8;
+        
+        if(request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }        
+        int start = (page - 1) * recordsPerPage;    
+        Triplet<List<Category>, List<Product>, Integer> trip = this.userService.getProductAndCategory(start, recordsPerPage);
+		//đã đóng kết nối
+        this.userService.relaseConnection();
+		int totalProducts =trip.getValue2();
+		 int totalPages = (int) Math.ceil(totalProducts * 1.0 / recordsPerPage);	 
+		request.setAttribute("categorys", trip.getValue(0));
+		request.setAttribute("products", trip.getValue(1));
+		 request.setAttribute("currentPage", page);
+	        request.setAttribute("totalPages", totalPages);
 		request.setAttribute("title","Trang chủ");
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/client/home.jsp");
 	        dispatcher.forward(request, response);
 	       

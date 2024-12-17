@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Đang nhập thành công</h1>
+	<form method="post" action="${pageContext.request.contextPath}/admin/product/update1" enctype="multipart/form-data">
+	<label>Image</label>
+			<input name="file" type="file">
+			<input type="submit" value="Gửi">
+	</form>
 </body>
 </html>

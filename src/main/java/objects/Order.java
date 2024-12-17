@@ -17,8 +17,11 @@ public class Order {
 	public int order_id;
 	public int order_userid;
 	public float order_price; 
-	public String order_satuts; 
-	public String order_delivery;
+	public int order_satuts; 
+	public int order_delivery;
+	public String  order_fullname;
+	public String  order_phone;
+	public String  order_address;
 	public Date order_creatAt;
 	public Date order_updateAt;
 }

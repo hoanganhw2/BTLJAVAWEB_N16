@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.javatuples.Pair;
+import org.javatuples.Triplet;
 
+import objects.Cart;
 import objects.User;
 
 /**
@@ -24,7 +26,10 @@ import objects.User;
 @WebFilter("/admin/*")
 public class AuthorizeAdmin extends HttpFilter implements Filter {
        
-    private static final String HttpServletResponse = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
      * @see HttpFilter#HttpFilter()
@@ -49,8 +54,8 @@ public class AuthorizeAdmin extends HttpFilter implements Filter {
 		HttpServletResponse	response1=((HttpServletResponse)response);
 		HttpSession session =request1.getSession();
 		if(session.getAttribute("user")!=null) {
-		Pair<User, String> pair = (Pair<User, String>) session.getAttribute("user");
-		String role = pair.getValue1();
+		Triplet<User, String,Cart> trip = (Triplet<User, String,Cart>) session.getAttribute("user") ;
+		String role = trip.getValue1();
 		if(role.equals("ROLE_ADMIN")) {
 			chain.doFilter(request, response);
 		}else {

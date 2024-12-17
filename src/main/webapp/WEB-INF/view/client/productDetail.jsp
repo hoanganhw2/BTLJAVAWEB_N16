@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="vi">
 
 <head>
@@ -9,7 +9,9 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>Mô tả chi tiết sản phẩm</title>
+<title>
+	<c:out value="${product.product_name}"></c:out>
+</title>
 
 <jsp:include page="_link.jsp" />
 </head>
@@ -116,7 +118,8 @@
 
 						<dt class="col-xl-4 col-sm-5 col-6">Tình trạng</dt>
 						<dd class="col-xl-8 col-sm-7 col-6">còn hàng</dd>
-
+						<dt class="col-xl-4 col-sm-5 col-6">Phù hợp</dt>
+						<dd class="col-xl-8 col-sm-7 col-6"><c:out value="${product.product_target}" ></c:out></dd>
 						<dt class="col-xl-4 col-sm-5 col-6">Số lượng</dt>
 						<dd class="col-xl-8 col-sm-7 col-6">
 							<input type="number" class="form-control w-50" value="1" min="1"
@@ -158,60 +161,38 @@
 				<div class="col">
 					<h3 class="pb-2">Đánh giá sản phẩm</h3>
 					<div class="rattings-wrapper mb-5">
+					<c:if test="${empty review}">
+						<p>Chưa có đánh giá nào.</p>
+					</c:if>
+					<c:forEach var="rv" items="${review}">
 						<div class="sin-rattings mb-4">
 							<div class="star-author-all mb-2 clearfix">
 								<div class="ratting-author float-start">
-									<h5 class="float-start me-3">Lê Thị B</h5>
-									<span>20/08/2020</span>
+									<h5 class="float-start me-3">${rv.name}</h5>
+									<span>${rv.dateCreate}</span>
 								</div>
 								<div class="ratting-star float-end">
-									<span class="rating-stars me-2"> <i
-										class="bi bi-star-fill active"></i> <i
-										class="bi bi-star-fill active"></i> <i
-										class="bi bi-star-fill active"></i> <i
-										class="bi bi-star-fill active"></i> <i class="bi bi-star-fill"></i>
-									</span> <span>(4)</span>
+									<span class="rating-stars me-2">
+									<c:forEach begin="1" end="5" var="i">
+									<i class="bi bi-star-fill ${i <= rv.rating ? 'active' : '' }"></i> 								
+									</c:forEach>
+									</span> 
+									<span>${rv.rating}</span>
 								</div>
 							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-								sed do eiusmod tempor incididunt ut labore et dolore magna
-								aliqua. Utenim ad minim veniam, quis nost rud exercitation
-								ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem
-								ipsum dolor sit amet, consectetur adipisicing elit, sed do
-								eiusmod tempor incididunt ut labore et dolore magna aliqua.
-								Utenim ad minim veniam, quis nost.</p>
+							<p>${rv.content}</p>
 						</div>
-						<div class="sin-rattings mb-4">
-							<div class="star-author-all mb-2 clearfix">
-								<div class="ratting-author float-start">
-									<h5 class="float-start me-3">Nguyễn Văn C</h5>
-									<span>19/08/2020</span>
-								</div>
-								<div class="ratting-star float-end">
-									<span class="rating-stars me-2"> <i
-										class="bi bi-star-fill active"></i> <i
-										class="bi bi-star-fill active"></i> <i
-										class="bi bi-star-fill active"></i> <i
-										class="bi bi-star-fill active"></i> <i
-										class="bi bi-star-fill active"></i>
-									</span> <span>(5)</span>
-								</div>
-							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-								sed do eiusmod tempor incididunt ut labore et dolore magna
-								aliqua. Utenim ad minim veniam, quis nost rud exercitation
-								ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-						</div>
+					</c:forEach>
 					</div>
 					<h3 class="pb-2">Thêm đánh giá</h3>
 					<div class="ratting-form-wrapper">
 						<div class="ratting-form">
-							<form action="">
+							<form method="post" action="${pageContext.request.contextPath}/product/review?id=${product.product_id}">
 								<div class="row">
 									<div class="col-md-3 mb-3">
-										<select class="form-select">
-											<option disabled selected>Cho sao</option>
-											<option value="1">1</option>
+										<span>Cho sao</span>
+										<select class="form-select" name="product_review_rating">											
+											<option value="1" selected="selected">1</option>
 											<option value="2">2</option>
 											<option value="3">3</option>
 											<option value="4">4</option>
@@ -221,8 +202,8 @@
 								</div>
 								<div class="row mb-3">
 									<div class="col">
-										<textarea class="form-control" placeholder="Nội dung đánh giá"
-											rows="3"></textarea>
+										<textarea class="form-control" placeholder="Nội dung đánh giá" name="product_review_content"
+											rows="3" required></textarea>
 									</div>
 								</div>
 								<button type="submit" class="btn btn-primary">Gửi đánh
@@ -239,7 +220,29 @@
 	</section>
 	<!-- section-content.// -->
 
-
+	<c:if test="${not empty sessionScope.msg}">
+        <div class="toast align-items-center bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="liveToast" style="margin-top: 60px">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <p class="text-white mb-0">${sessionScope.msg}</p>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const toastLiveExample = document.getElementById('liveToast');
+                const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample, {
+                    // Thêm options cho toast
+                    animation: true,
+                    autohide: true,
+                    delay: 1500
+                });
+                toastBootstrap.show();
+            });
+        </script>
+        <c:remove var="msg" scope="session" />
+    </c:if>
 	<jsp:include page="_footer.jsp"></jsp:include>
 
 </body>

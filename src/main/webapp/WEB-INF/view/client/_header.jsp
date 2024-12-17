@@ -36,19 +36,25 @@
    											 Tài khoản </span>
   
   								<ul class="dropdown-menu">
-    								<li><a class="dropdown-item" href="#">Thông tin tài khoản</a></li>
+  									<li class="text-center"><a
+				class="nav-link nav-profile " href="#"
+				data-bs-toggle="dropdown"> <img src="img/iphone.jpg" style="max-height: 50px"
+					alt="Profile" class="rounded-circle" /> 	
+									</a> </li>
+									<li class="text-center "><a class="dropdown-item text-primary" href="#">${sessionScope.fullname}</a></li>
+    								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/infor">Thông tin tài khoản</a></li>
     								<li><a class="dropdown-item" href="#">Sản phẩm yêu thích</a></li>
     								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Đăng xuất</a></li>
   								</ul>
 								</div>
 								</li>
-						<li><a href="#" class="nav-link text-body"> <i
+						<li><a href="${pageContext.request.contextPath}/order/list" class="nav-link text-body"> <i
 								class="bi bi-list-check d-block text-center fs-3"></i> <p class="mt-2">Đơn hàng</p>
 						</a></li>
-						<li style="position: relative;"><a href="#"
+						<li style="position: relative;"><a href="${pageContext.request.contextPath}/cart"
 							class="nav-link text-body"> <i
 								class="bi bi-cart d-block text-center fs-3"></i> <p class="mt-2"> Giỏ hàng</p> <span
-								class="cart-count" id="cartCount">3</span>
+								class="cart-count" id="cartCount">${sessionScope.cart_sum}</span>
 						</a></li>
 					</ul>
 				</div>

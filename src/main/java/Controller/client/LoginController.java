@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.javatuples.Pair;
+import org.javatuples.Triplet;
 
+import objects.Cart;
 import objects.User;
 import service.UserService;
 
@@ -40,7 +42,7 @@ public class LoginController extends HttpServlet {
 		if(session.getAttribute("user")!=null) {
 			response.sendRedirect(request.getContentType()+"/");
 		}
-		
+		this.userService.relaseConnection();
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(URLPAGE+"/login.jsp");
 		requestDispatcher.forward(request, response);
 	}
@@ -59,16 +61,31 @@ public class LoginController extends HttpServlet {
 			doGet(request, response);
 		}else {
 		
-		Pair<User, String> pair  = this.userService.getUser(username, password);
-		User user = pair.getValue0();
+		Triplet<User, String, Cart> triplet = this.userService.getUser(username, password);
+		// đã dóng kết nối
+		this.userService.relaseConnection();
+		User user =triplet.getValue0();
+		
 		if(user!=null) {
-			System.out.println(user.getUser_name());
-			System.out.println(user.getUser_pass());
+			
 			HttpSession session=  request.getSession();
-			session.setAttribute("user",pair);
+			session.setAttribute("user",triplet);
 			session.setAttribute("id", user.getUser_id());
-			session.setAttribute("login", "Đăng nhập thành công!");
+			session.setAttribute("fullname",user.getUser_fullname() );
+			int cart_sum = 0;
+			if(triplet.getValue2()!=null)
+			{
+				cart_sum= triplet.getValue2().getCart_sum();
+			}
+			session.setAttribute("cart_sum",cart_sum);
+			session.setAttribute("cartid", triplet.getValue2().getCart_id());
+			session.setAttribute("msg", "Đăng nhập thành công!");
+			if(triplet.getValue1().equals("ROLE_USER")) {
 			response.sendRedirect(request.getContextPath()+"/");
+			}else {
+				response.sendRedirect(request.getContextPath()+"/admin");
+			}
+			
 			
 		}else
 			{	

@@ -6,11 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import ValidateUtils.ProductValidate;
@@ -18,15 +21,18 @@ import objects.Category;
 import objects.Product;
 import service.ProductService;
 import service.UploadFileService;
-import service.UserService;
 
+/**
+ * Servlet implementation class UpdateProductController
+ */
 @WebServlet("/admin/product/update")
+@MultipartConfig(fileSizeThreshold=1024*1024*10, 	// 10 MB 
+maxFileSize=1024*1024*50,      	// 50 MB
+maxRequestSize=1024*1024*100)   //100 MB
 public class UpdateProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	  private UserService userService;
-	    private UploadFileService uploadFileService;
-	    private ProductService productService;
-	    private final String folder = "product";
+    private  ProductService productService;
+    private  UploadFileService uploadFileService;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -34,13 +40,15 @@ public class UpdateProductController extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-    @Override
-    public void init() throws ServletException {
-    	this.userService= new UserService();
-    	this.uploadFileService = new UploadFileService();
-    	this.productService= new ProductService();
-    	super.init();
-    }
+
+	/**
+	 * @see Servlet#init(ServletConfig)
+	 */
+	public void init(ServletConfig config) throws ServletException {
+		productService= new ProductService();
+		uploadFileService = new UploadFileService();
+	}
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -50,10 +58,11 @@ public class UpdateProductController extends HttpServlet {
 		if(id!=null) {
 			try {
 				int product_id = Integer.parseInt(id);
-				List<Category> categorys = this.userService.getProductAndCategory().getValue0();
-				this.userService.relaseConnection();
-				request.setAttribute("categorys", categorys);
-				Product product=this.productService.getProduct(product_id);
+				List<Category> categorys = this.productService.getAllCegory();
+				
+				request.setAttribute("categoris", categorys);
+				Product product=this.productService.getProduct(product_id).getValue0();
+				this.productService.relaseConnection();
 				request.setAttribute("product", product);
 				url="/WEB-INF/view/admin/product/update.jsp";
 			} catch (NumberFormatException e) {
@@ -70,6 +79,7 @@ public class UpdateProductController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			
 		int countError = 0;
 		String id = request.getParameter("id"); 
 	 String product_name = request.getParameter("product_name"); 		
@@ -107,8 +117,16 @@ public class UpdateProductController extends HttpServlet {
 		 int quantity = Integer.parseInt(product_quantity);
 		 int category = Integer.parseInt(product_category);
 		 int product_id = Integer.parseInt(id);
-		 String image_name = uploadFileService.uploadFile(product_image,folder);
 		 Product product = new Product();
+		 String image_name = "";
+		 if(product_image != null && product_image.getSize() > 0) {
+			    image_name = uploadFileService.uploadFile(product_image,"product");
+			    product.setProduct_image(image_name);
+			} else {
+			    image_name = request.getParameter("product_image").toString();
+			}
+		 
+		 
 		 product.setProduct_name(product_name);
 		 product.setProduct_shortdesc(product_shortdesc);
 		 product.setProduct_description(product_description);
@@ -119,17 +137,27 @@ public class UpdateProductController extends HttpServlet {
 		 product.setProduct_target(product_target);
 		 product.setProduct_category(category);
 		 product.setProduct_id(product_id);
+		 System.out.println(product.toString());
 		 if(this.productService.update(product)==false)
 		 {
 			 String msg = "Sửa thất bại";
-			 request.setAttribute("msg", msg);
+			
+			 System.out.println(msg);
+			 this.productService.relaseConnection();
 			 doGet(request, response);
 		 }
-		 String msg ="Thêm thành công";
-		 doGet(request, response);
+		 else {
+			 String update= "Sửa thành công";
+			 HttpSession session = request.getSession();
+			 session.setAttribute("update", update);
+			 response.sendRedirect(request.getContextPath()+"/admin/product");
+			 this.productService.relaseConnection();
+		 }
 		  
 	 }
 	
+	
+
 	}
 
 }

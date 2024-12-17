@@ -13,6 +13,31 @@
 <body>
 	<jsp:include page="../layout/_header.jsp" />
 	<jsp:include page="../layout/_sildebar.jsp" />
+	<div class="toast-container position-fixed top-0 end-0 p-3">
+    <c:if test="${not empty sessionScope.update}">
+        <div class="toast align-items-center bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="liveToast" style="margin-top: 60px">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <p class="text-white mb-0">${sessionScope.update}</p>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const toastLiveExample = document.getElementById('liveToast');
+                const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample, {
+                    // Thêm options cho toast
+                    animation: true,
+                    autohide: true,
+                    delay: 1500
+                });
+                toastBootstrap.show();
+            });
+        </script>
+        <c:remove var="update" scope="session" />
+    </c:if>
+</div>
 	<main id="main" class="main">
 
 		<div class="pagetitle">
@@ -68,7 +93,7 @@
                                                             VND
 											</td>
 											<td class="justify-content-arround"><a class="btn"
-												href="${pageContext.request.contextPath}/admin/product/1"><img
+												href="${pageContext.request.contextPath}/admin/product/view?id=${product.product_id}"><img
 													src="${pageContext.request.contextPath}/img/xem.png">
 											</a> <a class="btn"
 												href="${pageContext.request.contextPath}/admin/product/update?id=${product.product_id}"><img
@@ -94,14 +119,26 @@
 		<div>
 		<nav aria-label="Page navigation">
 			<ul class="pagination justify-content-center">
-				<li class="page-item" id="prevPage"><a class="page-link"
-					href="#">Trang trước</a></li>
+				<c:if test="${currentPage > 1}">
+					<li class="page-item" id="prevPage"><a class="page-link"
+					href="?page=${currentPage - 1}">Trang trước</a></li>
+				</c:if>
+				 <c:forEach begin="1" end="${totalPages}" var="i">
+				 <c:choose>
+				 <c:when test="${currentPage eq i}">
 				<li class="page-item active" id="page1"><a class="page-link"
-					href="#">1</a></li>
-				<li class="page-item" id="page2"><a class="page-link" href="#">2</a></li>
-				<li class="page-item" id="page3"><a class="page-link" href="#">3</a></li>
+					href="#">${i}</a></li>
+				</c:when>
+				<c:otherwise>
+				<li class="page-item " id="page1"><a class="page-link"
+					href="?page=${i}">${i}</a></li>
+				</c:otherwise>
+				</c:choose>
+				</c:forEach>
+				<c:if test="${currentPage < totalPages}">
 				<li class="page-item" id="nextPage"><a class="page-link"
-					href="#">Trang sau</a></li>
+					href="?page=${currentPage + 1}">Trang sau</a></li>
+				</c:if>
 			</ul>
 		</nav>
 		</div>
@@ -109,34 +146,9 @@
 		<!-- container.// -->
 	</main>
 	<!-- End #main -->
-	<div class="container">
+	
     <!-- Toast Container -->
-    <div id="toastContainer" class="position-fixed top-0 end-0 p-3">
-        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Thông báo</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                <c:if test="${not empty sessionScope.toastMessage}">
-                    ${sessionScope.toastMessage}
-                </c:if>
-            </div>
-        </div>
-    </div>
-</div>
-	<script>
-    $(document).ready(function() {
-        const toastMessage = "${sessionScope.toastMessage}";
-        if (toastMessage) {
-            $('#toast').toast({ delay: 3000 });
-            $('#toast').toast('show');
-            // Xóa thông báo sau khi hiển thị
-            <c:remove var="toastMessage" scope="session" />
-        }
-    });
     
-</script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<jsp:include page="../layout/_footer.jsp"></jsp:include>
 	

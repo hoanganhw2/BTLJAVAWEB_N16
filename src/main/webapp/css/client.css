@@ -107,3 +107,25 @@ a {
 	text-decoration: line-through;
 	color: #555555;
 }
+.toast-container {
+        z-index: 9999 !important; /* Đảm bảo toast hiển thị trên các phần tử khác */
+    }
+    
+    .toast {
+        min-width: 200px!important; /* Độ rộng tối thiểu của toast */
+    }
+    
+    /* Tùy chỉnh animation cho toast */
+    .toast.showing {
+        opacity: 1!important;
+    }
+    
+    .toast.show {
+        opacity: 1!important;
+    }
+    
+    .toast.hide {
+        opacity: 0!important;
+    }
+    
+ 

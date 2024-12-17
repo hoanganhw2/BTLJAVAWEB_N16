@@ -116,6 +116,17 @@ public class BasicImpl implements Basic {
 
 	@Override
 	public ResultSet get(String sql, String username, String userpass) {
+		try {
+			if(con==null) {
+				con=ConnectionPoolImpl.getInstance().getConnection("");
+			}
+			if(con.getAutoCommit()) {
+				con.setAutoCommit(false);
+			}
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		PreparedStatement pre =null;
 		
 		try {
@@ -147,10 +158,11 @@ public class BasicImpl implements Basic {
 	@Override
 	public ArrayList<ResultSet> gets(String multiselect) {
 		ArrayList<ResultSet> rs = new ArrayList<ResultSet>();
-
+			
 		try {
 			PreparedStatement pre = con.prepareStatement(multiselect);
 			boolean result = pre.execute();
+			
 			do {
 				if (result) {
 					rs.add(pre.getResultSet());

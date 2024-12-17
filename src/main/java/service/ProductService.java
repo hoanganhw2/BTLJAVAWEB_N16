@@ -6,8 +6,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.javatuples.Pair;
+import org.javatuples.Triplet;
+
 import dao.ProductDao;
 import dao.impl.ProductDaoImpl;
+import objectDTO.ProductReviewDTO;
 import objects.*;
 public class ProductService {
 	
@@ -28,41 +32,55 @@ public class ProductService {
 		public boolean delete(Product item) {
 			return this.product.delProduct(item);
 		}
-		public Product getProduct(int id) {
-			
-			try {
+		public Pair<Product, List<ProductReviewDTO>> getProduct(int id) {
 				Product product1 = new Product();
-				ResultSet rs = product.getProduct(id);
-				while(rs.next()) {
-				product1.setProduct_id(rs.getInt("product_id"));
-				product1.setProduct_name(rs.getString("product_name"));
-				product1.setProduct_image(rs.getString("product_image"));	
-				product1.setProduct_shortdesc(rs.getString("product_shortdesc"));	 
-				product1.setProduct_description(rs.getString("product_description"));	 
-				product1.setProduct_price(rs.getFloat("product_price"));
-				product1.setProduct_discount(rs.getFloat("product_discount"));
-				product1.setProduct_quantity(rs.getInt("product_quantity"));
-				product1.setProduct_target(rs.getString("product_target"));
-				product1.setProduct_category(rs.getInt("product_category"));
-				product1.setProduct_creatAt(rs.getDate("product_creatAt"));	 
-				product1.setProduct_updateAt(rs.getDate("product_updateAt"));
+				List<ProductReviewDTO>  productReviewDTOs = new ArrayList<>();
+			try {
+				ArrayList<ResultSet> arrResultSets = this.product.getProductAndReview(id);
+				
+				if(!arrResultSets.isEmpty()) {
+				if(arrResultSets.get(0).next()) {
+				
+				product1.setProduct_id(arrResultSets.get(0).getInt("product_id"));
+				product1.setProduct_name(arrResultSets.get(0).getString("product_name"));
+				product1.setProduct_image(arrResultSets.get(0).getString("product_image"));	
+				product1.setProduct_shortdesc(arrResultSets.get(0).getString("product_shortdesc"));	 
+				product1.setProduct_description(arrResultSets.get(0).getString("product_description"));	 
+				product1.setProduct_price(arrResultSets.get(0).getFloat("product_price"));
+				product1.setProduct_discount(arrResultSets.get(0).getFloat("product_discount"));
+				product1.setProduct_quantity(arrResultSets.get(0).getInt("product_quantity"));
+				product1.setProduct_target(arrResultSets.get(0).getString("product_target"));
+				product1.setProduct_category(arrResultSets.get(0).getInt("product_category"));
+				product1.setProduct_creatAt(arrResultSets.get(0).getDate("product_creatAt"));	 
+				product1.setProduct_updateAt(arrResultSets.get(0).getDate("product_updateAt"));
 					 				
 				}
+				while(arrResultSets.get(1).next()) {
+					ProductReviewDTO productReviewDTO = new ProductReviewDTO();
+					productReviewDTO.setName(arrResultSets.get(1).getString("user_fullname"));
+					productReviewDTO.setContent(arrResultSets.get(1).getString("productreview_content"));
+					productReviewDTO.setRating(arrResultSets.get(1).getInt("productreview_ratingscore"));
+					productReviewDTO.setDateCreate(arrResultSets.get(1).getDate("productreview_createAt"));
+					productReviewDTOs.add(productReviewDTO);
+				}
+					return new Pair<Product, List<ProductReviewDTO>>(product1, productReviewDTOs);
+				}
 				
-				return product1;
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				
 			}
-			return null;
+			return  new Pair<Product, List<ProductReviewDTO>>(new Product(), new ArrayList<>());
 			
 		}
-		public List<Product> getAll(){
-			List<Product> products;
+		public Pair<List<Product>, Integer> getProducts(int at, int toltal){
+			List<Product> products = new ArrayList<>();
+			int totalProduct =0 ;
 			try {
 				products = new ArrayList<>();
-				ArrayList<ResultSet> rs= this.product.getProducts("");
+				ArrayList<ResultSet> rs= this.product.Products("",at,  toltal);
 				ResultSet resultSet =rs.get(0);
 				while(resultSet.next()) {
 					Product product1 = new Product();
@@ -81,14 +99,20 @@ public class ProductService {
 					products.add(product1);
 				}
 				
-				return products;
+				ResultSet countRS = rs.get(1);
+		        if(countRS.next()) {
+		            totalProduct = countRS.getInt("total");
+		        }
+		        
+		        return new Pair<>(products,totalProduct);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return new Pair<List<Product>, Integer>(new ArrayList<>(), 0);
 			}
 			
 			
-			return null;
+			
 		}
 		public List<Category> getAllCegory(){
 			List<Category> categories = new ArrayList<>();
@@ -116,9 +140,14 @@ public class ProductService {
 			this.product.releaseConnection();
 		}
 		public static void main(String[] args) {
-			List<Category> categories = new ProductService().getAllCegory();
-			categories.forEach(x -> System.out.println(x.toString()));
+			ProductService pr = new ProductService();
+			Pair<Product, List<ProductReviewDTO>> pair =pr.getProduct(1);
+			System.out.println(pair);
+			pr.relaseConnection();
+			
 		}
 	
-
+		public boolean addProductReview(ProductReview item) {
+			return product.addProductReview(item);
+		}
 }

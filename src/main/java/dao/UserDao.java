@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import basic.ShareControl;
+import objects.Cart;
 import objects.User;
 
 public interface UserDao extends ShareControl {
@@ -20,5 +21,6 @@ public interface UserDao extends ShareControl {
 	ArrayList<ResultSet> getUsers(String multiselect);
 
 	ArrayList<ResultSet> getUsers(String multiselect, int at, int total);
+	
 	
 }

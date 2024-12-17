@@ -1,29 +1,21 @@
-const standardDeliveryPrice = 25000; // Giá giao tiêu chuẩn
-const expressDeliveryPrice = 50000;   // Giá giao nhanh
-
-const tempPriceElement = document.getElementById('temp-price');
-const deliveryPriceElement = document.getElementById('delivery-price');
-const totalPriceElement = document.getElementById('total-price');
-
-// Giả sử giá tạm tính là 100000 đồng
-let tempPrice = 100000;
-
-// Cập nhật giá trị ban đầu
-tempPriceElement.textContent = tempPrice;
-
+const DELIVERY_PRICES = {
+    standard: 25000,
+    express: 50000
+};
+// Xử lý khi thay đổi phương thức giao hàng
 document.querySelectorAll('input[name="delivery-method"]').forEach((input) => {
-    input.addEventListener('change', function () {
-        let deliveryPrice = 0;
-
-        // Kiểm tra hình thức giao hàng đã chọn
-        if (this.id === 'delivery-method-1') {
-            deliveryPrice = standardDeliveryPrice;
-        } else if (this.id === 'delivery-method-2') {
-            deliveryPrice = expressDeliveryPrice;
-        }
-
-        // Cập nhật giá trị hiển thị
-        deliveryPriceElement.textContent = deliveryPrice;
-        totalPriceElement.textContent = tempPrice + deliveryPrice;
+    input.addEventListener('change', function() {
+        // Lấy giá trị tạm tính và chuyển thành số
+        const tempPrice = parseInt(document.getElementById('temp-price').textContent.replace(/[^\d]/g, ''));
+        
+        // Tính phí giao hàng
+        const deliveryPrice = this.id === 'delivery-method-1' ? DELIVERY_PRICES.standard : DELIVERY_PRICES.express;
+        
+        // Cập nhật hiển thị
+        document.getElementById('delivery-price').textContent = 
+            new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(deliveryPrice);
+            
+        document.getElementById('total-price').textContent = 
+            new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tempPrice + deliveryPrice);
     });
 });

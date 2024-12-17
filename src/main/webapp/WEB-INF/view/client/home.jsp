@@ -2,8 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<html lang="vi">
-
+<html>
 <head>
 <jsp:include page="_link.jsp" />
 <title>Trang chủ</title>
@@ -80,7 +79,7 @@
 								<span class="text-danger"><fmt:formatNumber type="number" value="${product.product_discount }"/>
                                                             VND</span>
 							</div>
-							<a href="#" class="btn btn-primary mt-2 add-to-cart  "><i
+							<a href="${pageContext.request.contextPath}/cart/add?id=${product.product_id}" class="btn btn-primary mt-2 add-to-cart  "><i
 								class="bi bi-cart"></i>Thêm vào giỏ hàng</a>
 
 						</figcaption>
@@ -91,20 +90,31 @@
 				
 				
 
-			</div>
-			<!-- row.// -->
-			<nav aria-label="Page navigation">
-				<ul class="pagination justify-content-center">
+			<div>
+		<nav aria-label="Page navigation">
+			<ul class="pagination justify-content-center">
+				<c:if test="${currentPage > 1}">
 					<li class="page-item" id="prevPage"><a class="page-link"
-						href="#">Trang trước</a></li>
-					<li class="page-item active" id="page1"><a class="page-link"
-						href="#">1</a></li>
-					<li class="page-item" id="page2"><a class="page-link" href="#">2</a></li>
-					<li class="page-item" id="page3"><a class="page-link" href="#">3</a></li>
-					<li class="page-item" id="nextPage"><a class="page-link"
-						href="#">Trang sau</a></li>
-				</ul>
-			</nav>
+					href="?page=${currentPage - 1}">Trang trước</a></li>
+				</c:if>
+				 <c:forEach begin="1" end="${totalPages}" var="i">
+				 <c:choose>
+				 <c:when test="${currentPage eq i}">
+				<li class="page-item active" id="page1"><a class="page-link"
+					href="#">${i}</a></li>
+				</c:when>
+				<c:otherwise>
+				<li class="page-item " id="page1"><a class="page-link"
+					href="?page=${i}">${i}</a></li>
+				</c:otherwise>
+				</c:choose>
+				</c:forEach>
+				<c:if test="${currentPage < totalPages}">
+				<li class="page-item" id="nextPage"><a class="page-link"
+					href="?page=${currentPage + 1}">Trang sau</a></li>
+				</c:if>
+			</ul>
+		</nav>
 		</div>
 		<!-- container.// -->
 
@@ -113,11 +123,11 @@
 	</section>
 	<!-- section-content.// -->
 	 <div class="container mt-3">
-        <c:if test="${not empty sessionScope.login}">
+        <c:if test="${not empty sessionScope.msg}">
             <div class="toast align-items-center bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="liveToast">
                 <div class="d-flex">
                     <div class="toast-body">
-                      <p class="text-white">Đăng nhập thành công</p>
+                      <p class="text-white">${sessionScope.msg}</p>
                     </div>
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
@@ -133,7 +143,7 @@
                     }, 1500); // 3 giây
                 });
             </script>
-           <c:remove var="login" scope="session" />
+           <c:remove var="msg" scope="session" />
         </c:if>
     </div>
 	<jsp:include page="_footer.jsp"></jsp:include>

@@ -18,17 +18,18 @@
 		<li class="nav-item"><a class="nav-link collapsed"
 			data-bs-target="#tables-nav"
 			href="${pageContext.request.contextPath}/admin/product"> <i
-				class="bi bi-journal-text"></i><span>Sản phẩm</span>
+				class="bi bi-box"></i><span>Sản phẩm</span>
 		</a></li>
 		<li class="nav-item"><a class="nav-link collapsed"
-			data-bs-target="#tables-nav" data-bs-toggle="collapse" href="đá">
-				<i class="bi bi-journal-text"></i><span>Đơn hàng</span>
+			data-bs-target="#tables-nav"
+			href="${pageContext.request.contextPath}/admin/order"> <i
+				class="bi bi-journal-text"></i><span>Đơn hàng</span>
 		</a></li>
 		<li class="nav-item"><a class="nav-link collapsed"
-			data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-				<i class="bi bi-question-circle"></i><span>Khách hàng</span>
+			data-bs-target="#tables-nav"
+			href="${pageContext.request.contextPath}/admin/user"> <i
+				class="bi bi-person-fill"></i><span>Khách hàng</span>
 		</a></li>
-
 
 	</ul>
 </aside>

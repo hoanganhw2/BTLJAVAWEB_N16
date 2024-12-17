@@ -111,6 +111,30 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 		
 		return flag;
 	}
+	public boolean isCart(int user_id) {
+		boolean flag = false ;
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT * FROM tblcart WHERE user_id = ?");
+		sql.append("");
+		ResultSet rs = get(sql.toString(), user_id);
+		try {
+			if(rs.next()) {
+				flag=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return flag;
+	}
 	@Override
 	public ResultSet getUser(int id) {
 		
@@ -123,12 +147,15 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 	@Override
 	public ResultSet getUser(String username, String userpass) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT user_id,user_name,user_pass,user_image,user_fullname,user_gender,user_email,user_phone,user_address,user_role,user_createAt,user_updateAt,role_name");
-		sql.append(" ").append("FROM tbluser ");
-			
-		sql.append("INNER JOIN tblrole ON tbluser.user_role = tblrole.role_id")	;
-		sql.append(" ");			
-		sql.append(" WHERE user_name= ? and user_pass = md5(?)" );
+		sql.append("SELECT u.user_id, u.user_name, u.user_pass, u.user_image, u.user_fullname, ")
+		   .append("u.user_gender, u.user_email, u.user_phone, u.user_address, u.user_role, ")
+		   .append("u.user_createAt, u.user_updateAt, r.role_name, ")
+		   .append("c.cart_id, c.cart_userid, c.cart_sum, c.cart_creatAt, c.cart_updateAt ")
+		   .append("FROM tbluser u ")
+		   .append("LEFT JOIN tblrole r ON u.user_role = r.role_id ")
+		   .append("LEFT JOIN tblcart c ON u.user_id = c.cart_userid ")
+		   .append("WHERE u.user_name = ? ")
+		   .append("AND u.user_pass = md5(?) ");
 		return get(sql.toString(), username, userpass);
 	}
 
@@ -146,6 +173,7 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 			e2.printStackTrace();
 		}
 		if (multiselect != null && !multiselect.trim().equals("")) {
+			
 			return gets(multiselect);
 		} else {
 			StringBuilder sqlBuilder = new StringBuilder();
@@ -169,6 +197,8 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 			e2.printStackTrace();
 		}
 		StringBuilder sql = new StringBuilder();
+		if(multiselect.trim().equals("")) {
+		
 		sql.append("SELECT * FROM tbluser ");
 		sql.append(" ");
 		sql.append("ORDER BY user_id DESC ");
@@ -176,9 +206,12 @@ public class UserDaoImpl extends BasicImpl implements UserDao {
 
 		// Dem so luong nguoi su dung
 		sql.append("SELECT COUNT(user_id) AS total FROM tbluser;");
-		
-
+		}else {
+			return this.gets(multiselect);
+		}
+			
 		return this.gets(sql.toString());
+		
 
 	}
 	
